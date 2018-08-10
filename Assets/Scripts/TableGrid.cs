@@ -1,44 +1,55 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TableGrid : MonoBehaviour {
-    public int xSize, ySize;
-    private int xSizePos, ySizePos;
-    //public int startPosX, startPosY;
 
-    private Vector3[] vertices;
+    public int sizeX = 10, sizeY = 10;
+    public float width = 1.0f, height = 1.0f;
 
-    // Use this for initialization
-    void Start() {
-        xSizePos = (int)transform.position.x + xSize;
-
-        ySizePos = (int)transform.position.y + ySize;
-
-        GenerateGrid();
+    private void Start()
+    {
+        
     }
 
-    private void GenerateGrid() {
-        vertices = new Vector3[(xSize + 1) * (ySize + 1)];
-        for (int i = 0, y = (int)transform.position.y; y <= ySizePos; y++)
+    private void Update()
+    {
+        
+    }
+
+    /// <summary>
+    /// makes sure the  Minimum size is a 1X1 grid
+    /// </summary>
+    public void OnValidate()
+    {
+        if (sizeX <= 0)
+            sizeX = 1;
+
+        if (sizeY <= 0)
+            sizeY = 1;
+
+        if(width <= 0.0f)        
+            width = 0.01f;
+
+        if (height <= 0.0f)
+            height = 0.01f;
+        
+    }
+
+    private void OnDrawGizmos()
+    {
+        Vector3 position = transform.position;
+
+        for(float y = 0; y <= sizeY; y++)
         {
-            for (int x = (int)transform.position.x; x <= xSizePos; x++, i++)
-            {
-                vertices[i] = new Vector3(x, y);
-            }
+            Gizmos.DrawLine(new Vector3(position.x, position.y + (y * height)),
+                new Vector3(position.x + sizeX * width, position.y + (y *height)));
+        }
+
+        for(float x = 0; x <= sizeX; x++)
+        {
+            Gizmos.DrawLine(new Vector3(position.x + (x * width), position.y),
+                new Vector3(position.x + (x * width), position.y + (sizeY * height)));
         }
     }
 
-    private void OnDrawGizmos() {
-        if (vertices == null)
-        {
-            return;
-        }
-        Gizmos.color = Color.black;
-        for (int i = 0; i < vertices.Length; i++)
-        {
-            Gizmos.DrawSphere(vertices[i], 0.1f);
-        }
-    }
+
 }
