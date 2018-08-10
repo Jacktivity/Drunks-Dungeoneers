@@ -15,7 +15,8 @@ class TableGridEditor : Editor
     }
 
     public override void OnInspectorGUI()
-    { 
+    {
+        base.OnInspectorGUI();
 
         GUILayout.BeginHorizontal();
         GUILayout.Label("Grid X");

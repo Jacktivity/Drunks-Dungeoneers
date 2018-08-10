@@ -5,14 +5,11 @@ public class TableGrid : MonoBehaviour {
     public int sizeX = 10, sizeY = 10;
     public float width = 1.0f, height = 1.0f;
 
+    private Point[,] grid;
+
     private void Start()
     {
-        
-    }
-
-    private void Update()
-    {
-        
+        grid = new Point[sizeX, sizeY];
     }
 
     /// <summary>

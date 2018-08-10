@@ -1,7 +1,14 @@
 ﻿using UnityEngine;
 
-class Point
+public enum TileContent
 {
-    bool isEmpty;
-    Vector2 location;
+    IsEmpty,
+    Seat,
+    Blocking
+}
+
+class Point
+{ 
+    public TileContent tileContent;
+    public Vector2 location;
 }
