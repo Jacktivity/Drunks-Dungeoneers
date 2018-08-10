@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Maid : MonoBehaviour {
 
+    // Variables
     private int health;
     private float hSpeed;
     private float vSpeed;
-
     private DrinkTemplate drink;
 
     // Use this for initialization
@@ -36,4 +36,32 @@ public class Maid : MonoBehaviour {
 
         }
     }
+    
+    /*
+     * Getters  
+     */
+
+    public int getHealth()
+    {
+        return this.health;
+    }
+
+    public float getvSpeed()
+    {
+        return this.vSpeed;
+    }
+
+    public float gethSpeed()
+    {
+        return this.hSpeed;
+    }
+
+    public DrinkTemplate getdrink()
+    {
+        return this.drink;
+    }
+
+    /*
+     * Setters 
+     */
 }
