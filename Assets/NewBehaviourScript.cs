@@ -4,21 +4,5 @@ using UnityEngine;
 
 public class NewBehaviourScript : MonoBehaviour {
 
-    private int health;
-    private float hSpeed;
-    private float vSpeed;
-
-    private DrinkTemplate drink;
-
-	// Use this for initialization
-	void Start ()
-    {
-		
-	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
-		
-	}
+    
 }

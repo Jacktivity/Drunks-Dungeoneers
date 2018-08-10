@@ -11,5 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: Beer
   m_EditorClassIdentifier: Assembly-CSharp::DrinkTemplate
-  objectName: New Drink
+  objectName: Beer
   sprite: {fileID: 0}
