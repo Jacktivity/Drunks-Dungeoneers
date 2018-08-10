@@ -8,7 +8,7 @@ public class Maid : MonoBehaviour {
     private int health;
     private Vector2 hSpeed;
     private Vector2 vSpeed;
-    private DrinkTemplate drink;
+    public DrinkTemplate drink;
     private Rigidbody2D rb;
 
     // Use this for initialization
@@ -47,6 +47,8 @@ public class Maid : MonoBehaviour {
 
         hSpeed = new Vector2(0, 0);
         vSpeed = new Vector2(0, 0);
+
+        this.GetComponent<SpriteRenderer>().sprite = drink.sprite;
     }
     
     /*
