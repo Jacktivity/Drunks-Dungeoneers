@@ -6,35 +6,47 @@ public class Maid : MonoBehaviour {
 
     // Variables
     private int health;
-    private float hSpeed;
-    private float vSpeed;
+    private Vector2 hSpeed;
+    private Vector2 vSpeed;
     private DrinkTemplate drink;
+    private Rigidbody2D rb;
 
     // Use this for initialization
     void Start()
     {
-
+        rb = this.GetComponent<Rigidbody2D>();
+        vSpeed = new Vector2(0,0);
+        hSpeed = new Vector2(0, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("w"))
+       
+
+        if (Input.GetKey("w"))
         {
+            vSpeed = new Vector2(0, 2);
             Debug.Log("Forward key pressed.");
         }
-        else if (Input.GetKeyDown("a"))
+        if (Input.GetKey("a"))
         {
+            hSpeed = new Vector2(-2, 0);
+        }
+        if (Input.GetKey("s"))
+        {
+            vSpeed = new Vector2(0, -2);
 
         }
-        else if (Input.GetKeyDown("s"))
+        if (Input.GetKey("d"))
         {
-
+            hSpeed = new Vector2(2, 0);
         }
-        else if (Input.GetKeyDown("d"))
-        {
 
-        }
+        rb.MovePosition(rb.position + (hSpeed + vSpeed) * Time.deltaTime);
+
+        hSpeed = new Vector2(0, 0);
+        vSpeed = new Vector2(0, 0);
     }
     
     /*
@@ -46,12 +58,12 @@ public class Maid : MonoBehaviour {
         return this.health;
     }
 
-    public float getvSpeed()
+    public Vector2 getvSpeed()
     {
         return this.vSpeed;
     }
 
-    public float gethSpeed()
+    public Vector2 gethSpeed()
     {
         return this.hSpeed;
     }
