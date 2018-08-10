@@ -55,22 +55,22 @@ public class Maid : MonoBehaviour {
      * Getters  
      */
 
-    public int getHealth()
+    public int GetHealth()
     {
         return this.health;
     }
 
-    public Vector2 getvSpeed()
+    public Vector2 GetvSpeed()
     {
         return this.vSpeed;
     }
 
-    public Vector2 gethSpeed()
+    public Vector2 GethSpeed()
     {
         return this.hSpeed;
     }
 
-    public DrinkTemplate getdrink()
+    public DrinkTemplate Getdrink()
     {
         return this.drink;
     }
