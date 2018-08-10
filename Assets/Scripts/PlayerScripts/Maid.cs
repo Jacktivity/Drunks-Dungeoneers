@@ -19,6 +19,21 @@ public class Maid : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown("w"))
+        {
+            Debug.Log("Forward key pressed.");
+        }
+        else if (Input.GetKeyDown("a"))
+        {
 
+        }
+        else if (Input.GetKeyDown("s"))
+        {
+
+        }
+        else if (Input.GetKeyDown("d"))
+        {
+
+        }
     }
 }
