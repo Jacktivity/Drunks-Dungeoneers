@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Name: Orc Ale
   m_EditorClassIdentifier: Assembly-CSharp::DrinkTemplate
   objectName: Orc Ale
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 69677e7b8be02ac45a7706ae3420dcab, type: 3}

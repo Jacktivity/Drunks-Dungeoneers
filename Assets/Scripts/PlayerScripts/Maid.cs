@@ -5,10 +5,13 @@ using UnityEngine;
 public class Maid : MonoBehaviour {
 
     // Variables
+
+    public DrinkTemplate drink;
+    public GameObject drinkTemplate;
+
     private int health;
     private Vector2 hSpeed;
     private Vector2 vSpeed;
-    public DrinkTemplate drink;
     private Rigidbody2D rb;
 
     // Use this for initialization
@@ -17,6 +20,7 @@ public class Maid : MonoBehaviour {
         rb = this.GetComponent<Rigidbody2D>();
         vSpeed = new Vector2(0,0);
         hSpeed = new Vector2(0, 0);
+       
     }
 
     // Update is called once per frame
@@ -48,7 +52,7 @@ public class Maid : MonoBehaviour {
         hSpeed = new Vector2(0, 0);
         vSpeed = new Vector2(0, 0);
 
-        this.GetComponent<SpriteRenderer>().sprite = drink.sprite;
+        
     }
     
     /*
@@ -78,4 +82,8 @@ public class Maid : MonoBehaviour {
     /*
      * Setters 
      */
+    public void SetDrink(DrinkTemplate newDrink)
+    {
+        drinkTemplate.GetComponent<MaidsDrink>().setDrink(newDrink);
+    }
 }

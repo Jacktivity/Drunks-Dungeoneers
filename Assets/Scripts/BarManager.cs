@@ -5,14 +5,43 @@ using UnityEngine;
 public class BarManager : MonoBehaviour {
 
     public DrinkTemplate[] drinks;
-
+    public GameObject[] drinkTemplates;
+    public GameObject maid;
 	// Use this for initialization
-	void Start () {
-		
+	void Start ()
+    {
+        SetDrinks();
+        Instantiate(maid);
 	}
 
 	// Update is called once per frame
-	void Update () {
-		
+	void Update ()
+    {
+        SetDrinks();
 	}
+
+    public DrinkTemplate SelectDrink()
+    {
+        int pos = Random.Range(0, drinks.Length);
+        return drinks[pos];
+    }
+    /*
+     * Setters
+     * */
+    public void SetDrinks()
+    {
+        foreach (GameObject obj in drinkTemplates)
+        {
+            if (obj.GetComponent<SpriteRenderer>().sprite == null)
+            { 
+                obj.GetComponent<DrinkHolder>().SetDrink(SelectDrink());
+            }
+
+        }
+    }
+
+    public void SetMaidDrink(DrinkTemplate drink)
+    {
+        maid.GetComponent<Maid>().SetDrink(drink);
+    }
 }
