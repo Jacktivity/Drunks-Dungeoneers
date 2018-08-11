@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<< HEAD:Assets/Scripts/PlayerScripts.meta
-guid: d7ff7106397af394794a2e1d4772078b
-=======
-guid: ccf48a7e66aa69940846b51179c24849
->>>>>>> Environments:Assets/Scripts/PathFinding.meta
+guid: d4ba18847a3d72b4c8f5b42806845cd3
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
