@@ -8,6 +8,7 @@ public class Maid : MonoBehaviour {
 
     public DrinkTemplate drink;
     public GameObject drinkHeld;
+    public GameObject GameMaster;
 
     private int health;
     private Vector2 hSpeed;
@@ -43,12 +44,17 @@ public class Maid : MonoBehaviour {
         {
             hSpeed = new Vector2(2, 0);
         }
-
+        
         rb.MovePosition(rb.position + (hSpeed + vSpeed) * Time.deltaTime);
 
         hSpeed = new Vector2(0, 0);
         vSpeed = new Vector2(0, 0);
 
+
+        if(Input.GetKeyDown("p"))
+        {
+            GameMaster.GetComponent<UIController>().PauseGame();
+        }
         
     }
     

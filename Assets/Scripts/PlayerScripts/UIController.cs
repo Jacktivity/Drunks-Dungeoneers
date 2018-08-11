@@ -12,38 +12,20 @@ public class UIController : MonoBehaviour {
         None
     }
 
-    //Current active pause UI
-    enum OpenPauseWindow
-    {
-        Unpaused,
-        Paused,
-        Options
-    }
-
     private OpenGameWindow currentGameWindow;
-    private OpenPauseWindow currentPauseWindow;
 
     //References to UI windows
     public GameObject PauseWindow;
     public GameObject OptionsWindow;
+    public GameObject HelpWindow;
 
 
-
-    public void PauseGame(bool value)
+    public void PauseGame()
     {
-        if (value)
-        {
-            Time.timeScale = 0;
-            PauseWindow.SetActive(true);
-            SetActivePauseWindow(OpenPauseWindow.Paused);
-
-        }
-        else
-        {
-            Time.timeScale = 1;
-            PauseWindow.SetActive(false);
-            SetActivePauseWindow(OpenPauseWindow.Paused);
-        }
+        Time.timeScale = 0;
+        PauseWindow.SetActive(true);
+        OptionsWindow.SetActive(false);
+        HelpWindow.SetActive(false);
     }
 
     public void TogglePauseMenu()
@@ -60,19 +42,25 @@ public class UIController : MonoBehaviour {
         }
     }
 
-    public void OpenOptions(bool value)
+    public void OpenOptionsWindow()
     {
-        if(value)
-        {
-            PauseWindow.SetActive(false);
-            OptionsWindow.SetActive(value);
-            SetActivePauseWindow(OpenPauseWindow.Options);
-        }
-        else
-        {
-            OptionsWindow.SetActive(value);
-        }
-    
+        PauseWindow.SetActive(false);
+        OptionsWindow.SetActive(true);
+        HelpWindow.SetActive(false);
+    }
+
+    public void OpenHelpWindow()
+    {
+        PauseWindow.SetActive(false);
+        OptionsWindow.SetActive(false);
+        HelpWindow.SetActive(true);
+    }
+
+    public void OpenPauseWindow()
+    {
+        PauseWindow.SetActive(true);
+        OptionsWindow.SetActive(false);
+        HelpWindow.SetActive(false);
     }
 
     public void QuitLevel()
@@ -80,24 +68,4 @@ public class UIController : MonoBehaviour {
         SceneManager.LoadScene(0);
     }
 
-    private OpenGameWindow CheckActiveGameWindow()
-    {
-        return currentGameWindow;
-    }
-
-    private void SetActiveGameWindow(OpenGameWindow newWindow)
-    {
-        currentGameWindow = newWindow;
-    }
-
-
-    private OpenPauseWindow CheckActivePauseWindow()
-    {
-        return currentPauseWindow;
-    }
-
-    private void SetActivePauseWindow(OpenPauseWindow newWindow)
-    {
-        currentPauseWindow = newWindow;
-    }
 }
