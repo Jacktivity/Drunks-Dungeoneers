@@ -6,12 +6,19 @@ public class Maid : MonoBehaviour {
 
     // Variables
 
+    Animator anim;
+    bool walkingRight;
+    bool walkingLeft;
+    bool walkingAway;
+    bool walkingTowards;
+
     public DrinkTemplate drink;
     public GameObject drinkHeld;
 
     private int health;
     private Vector2 hSpeed;
     private Vector2 vSpeed;
+    private Vector2 drinkPos;
     private Rigidbody2D rb;
 
     // Use this for initialization
@@ -20,6 +27,14 @@ public class Maid : MonoBehaviour {
         rb = this.GetComponent<Rigidbody2D>();
         vSpeed = new Vector2(0,0);
         hSpeed = new Vector2(0, 0);
+        anim = GetComponent<Animator>();
+
+        walkingRight = false;
+        walkingLeft = false;
+        walkingAway = false;
+        walkingTowards = false;
+
+        drinkPos = drinkHeld.transform.localPosition;
     }
 
     // Update is called once per frame
@@ -28,20 +43,51 @@ public class Maid : MonoBehaviour {
         if (Input.GetKey("w"))
         {
             vSpeed = new Vector2(0, 2);
-            Debug.Log("Forward key pressed.");
+            walkingAway = true;
+            walkingLeft = false;
+            walkingRight = false;
+            walkingTowards = false;
+            drinkHeld.transform.localPosition = new Vector2(-drinkPos.x, drinkPos.y);
         }
         if (Input.GetKey("a"))
         {
+           
             hSpeed = new Vector2(-2, 0);
+            walkingLeft = true;
+
+            transform.localScale = new Vector3(1,1,1);
         }
         if (Input.GetKey("s"))
         {
             vSpeed = new Vector2(0, -2);
+            walkingTowards = true;
+            walkingAway = false;
+            walkingLeft = false;
+            walkingRight = false;
+            
 
         }
         if (Input.GetKey("d"))
         {
             hSpeed = new Vector2(2, 0);
+            walkingLeft = true;
+            transform.localScale = new Vector3(-1, 1, 1);
+            transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, transform.rotation.z, transform.rotation.w);
+            
+        }
+
+        anim.SetBool("WalkBack", walkingAway);
+        anim.SetBool("WalkLeft", walkingLeft);
+        anim.SetBool("WalkForward", walkingTowards);
+        anim.SetBool("WalkRight", walkingRight);
+
+        if (walkingTowards || walkingLeft)
+        {
+            drinkHeld.transform.localPosition = new Vector2(drinkPos.x, drinkPos.y);
+        }
+        else
+        {
+            drinkHeld.transform.localPosition = new Vector2(-drinkPos.x, drinkPos.y);
         }
 
         rb.MovePosition(rb.position + (hSpeed + vSpeed) * Time.deltaTime);
@@ -49,7 +95,7 @@ public class Maid : MonoBehaviour {
         hSpeed = new Vector2(0, 0);
         vSpeed = new Vector2(0, 0);
 
-        
+
     }
     
     /*

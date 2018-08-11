@@ -5,7 +5,7 @@ using UnityEngine;
 public class BarManager : MonoBehaviour {
 
     public DrinkTemplate[] drinks;
-    public GameObject[] drinkTemplates;
+    public DrinkHolder[] drinkTemplates;
     public GameObject maid;
 
 
@@ -32,11 +32,17 @@ public class BarManager : MonoBehaviour {
      * */
     public void SetDrinks()
     {
-        foreach (GameObject obj in drinkTemplates)
+        foreach (DrinkHolder obj in drinkTemplates)
         {
-                if (obj.GetComponent<SpriteRenderer>().sprite == null)
-            { 
-                obj.GetComponent<DrinkHolder>().SetDrink(SelectDrink());
+            var drink = SelectDrink();
+            if (obj.GetComponent<SpriteRenderer>().sprite == null)
+            {
+                if(!CheckDrinks(drink))
+                {
+                    drink = SelectDrink();
+                    CheckDrinks(drink);
+                }
+                obj.SetDrink(drink);
             }
         }
     }
@@ -51,5 +57,16 @@ public class BarManager : MonoBehaviour {
     {
         yield return new WaitForSeconds(5);
         SetDrinks();
+    }
+    public bool CheckDrinks(DrinkTemplate drink)
+    {
+        foreach(DrinkHolder obj in drinkTemplates)
+        {
+            if (drink == obj.drinkTemplate)
+            {
+                return false;
+            }    
+        }
+        return true;
     }
 }
