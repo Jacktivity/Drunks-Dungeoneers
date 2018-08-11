@@ -11,15 +11,13 @@ public class PathFinderTest : MonoBehaviour {
 
     [SerializeField]
     public List<Vector2> path;
-    int index = -1;
+    int index = 0;
 
     public float delay;
 
     private void Start()
     {
-        delay = stepDelay;
-
-        
+        delay = stepDelay;        
     }
 
     public void GetPath()
@@ -30,10 +28,9 @@ public class PathFinderTest : MonoBehaviour {
 
     private void Update()
     {
-
         if (delay < 0.0f)
         {
-            if (index != path.Count)
+            if (index < path.Count)
             {
                 Vector3 newPosition = grid.GetWorldPositionOfGrid(path[index]);
                 transform.position = newPosition;
