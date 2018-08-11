@@ -4,15 +4,13 @@ using UnityEngine;
 
 
 public class PatronManager : MonoBehaviour {
-    Sprite[] bodies;
-    Sprite[] heads;
+    [SerializeField] private Sprite[] bodies;
+    [SerializeField] private Sprite[] heads;
 
     List<Patron> patrons;
 	// Use this for initialization
 	void Start () {
         patrons = new List<Patron>();
-        bodies = (Sprite[])Resources.LoadAll("Races", typeof(Sprite));
-        heads = (Sprite[])Resources.LoadAll("Classes", typeof(Sprite));
     }
 	
     public void MakePatron(IEnumerable<Vector2> destination)
@@ -25,7 +23,12 @@ public class PatronManager : MonoBehaviour {
 
         Sprite[] character = { head, body };
 
-        patrons.Add(new Patron(randClass,randRace,0.5f,1f,character, destination));
+        GameObject patron = new GameObject();
+        patron.AddComponent<Patron>();
+        patron.transform.parent = gameObject.transform;
+        
+
+        patron.GetComponent<Patron>().SetUpPatron(randClass,randRace,0.1f,1f,character,destination);
     }
 
 	// Update is called once per frame

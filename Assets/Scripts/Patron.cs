@@ -23,7 +23,7 @@ public class Patron : MonoBehaviour {
     private Race charRace;
     private Class charClass;
 
-    public Patron(Class patronClass, Race patronRace, float moveInterval, float actionInterval
+    public void SetUpPatron(Class patronClass, Race patronRace, float moveInterval, float actionInterval
         , IEnumerable<Sprite> character, IEnumerable<Vector2> path)
     {
         SetUpSprites(patronClass, patronRace, character);

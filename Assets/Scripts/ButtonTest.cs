@@ -6,19 +6,16 @@ using UnityEngine.UI;
 public class ButtonTest : MonoBehaviour
 {
     public Button button;
-    Patron patron;
+
 
     // Use this for initialization
     void Start() {
         button = GetComponent<Button>();
         button.onClick.AddListener(TaskOnClick);
-
-        patron = GameObject.Find("EventSystem").GetComponent<Patron>(); 
     }
 
     void TaskOnClick() {
-        GameObject empty = new GameObject();
-        empty.AddComponent<Patron>();
-        empty.GetComponent<Patron>();
+        Vector2[] path = { new Vector2(0, 0) };
+        GetComponent<PatronManager>().MakePatron(path);
     }
 }
