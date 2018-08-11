@@ -54,14 +54,16 @@ public class Maid : MonoBehaviour {
 
         if(Input.GetKeyDown("p"))
             GameMaster.GetComponent<UIController>().PauseGame();
-
+        
+        //TO REMOVE - DEBUG CONTROLS
+        ///////////////////////////////
         if(Input.GetKeyDown("j"))
             health -= 1;
         if (Input.GetKeyDown("k"))
             health += 1;
-
+        ///////////////////////////////
     }
-    
+
     /*
      * Getters  
      */
