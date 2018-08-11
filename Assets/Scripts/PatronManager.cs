@@ -17,8 +17,8 @@ public class PatronManager : MonoBehaviour {
 	
     public void MakePatron()
     {
-        Patron.Race randRace = (Patron.Race)Random.RandomRange(0, 4);
-        Patron.Class randClass = (Patron.Class)Random.RandomRange(0, 3);
+        Patron.Race randRace = (Patron.Race)Random.Range(0, 4);
+        Patron.Class randClass = (Patron.Class)Random.Range(0, 3);
 
         Sprite head = heads[(int)randClass];
         Sprite body = bodies[(int)randRace];
