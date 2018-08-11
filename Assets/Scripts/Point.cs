@@ -2,13 +2,18 @@
 
 public enum TileContent
 {
-    IsEmpty,
     Seat,
+    FullSeat,
     Blocking
 }
 
-class Point
+public class Point
 { 
+    public Point(Vector2 location)
+    {
+        this.location = location;
+    }
+
     public TileContent tileContent;
     public Vector2 location;
 }

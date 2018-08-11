@@ -29,13 +29,8 @@ class TableGridEditor : Editor
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Grid Width");
-        tableGrid.width = EditorGUILayout.FloatField(tableGrid.width, GUILayout.Width(50));
-        GUILayout.EndHorizontal();
-
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("Grid Height");
-        tableGrid.height = EditorGUILayout.FloatField(tableGrid.height, GUILayout.Width(50));
+        GUILayout.Label("Grid Size");
+        tableGrid.gridSize = EditorGUILayout.FloatField(tableGrid.gridSize, GUILayout.Width(50));
         GUILayout.EndHorizontal();
 
         SceneView.RepaintAll();
