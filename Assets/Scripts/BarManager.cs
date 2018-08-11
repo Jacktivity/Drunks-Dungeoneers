@@ -34,7 +34,7 @@ public class BarManager : MonoBehaviour {
     {
         foreach (GameObject obj in drinkTemplates)
         {
-            if (obj.GetComponent<SpriteRenderer>().sprite == null)
+                if (obj.GetComponent<SpriteRenderer>().sprite == null)
             { 
                 obj.GetComponent<DrinkHolder>().SetDrink(SelectDrink());
             }

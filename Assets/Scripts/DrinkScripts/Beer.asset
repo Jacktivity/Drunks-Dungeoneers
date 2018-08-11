@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Name: Beer
   m_EditorClassIdentifier: Assembly-CSharp::DrinkTemplate
   objectName: Beer
-  sprite: {fileID: 21300000, guid: 0a03f5bce5e55484f9fbfe1d3f5b8c7c, type: 3}
+  sprite: {fileID: 21300010, guid: ac1396e829a91f04aa3bba481cb9a256, type: 3}
