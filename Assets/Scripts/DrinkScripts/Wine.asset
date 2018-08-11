@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
-  m_Name: Beer
+  m_Name: Wine
   m_EditorClassIdentifier: Assembly-CSharp::DrinkTemplate
-  objectName: Beer
-  sprite: {fileID: 21300000, guid: 0a03f5bce5e55484f9fbfe1d3f5b8c7c, type: 3}
+  objectName: Wine
+  sprite: {fileID: 21300000, guid: 70e9c1cbaa5d9904ebf3dfdc09b136b7, type: 3}
