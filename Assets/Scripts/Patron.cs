@@ -10,8 +10,6 @@ public class Patron : MonoBehaviour {
 
     private SpriteRenderer bodySprite;
     private SpriteRenderer helmSprite;
-    private Sprite[] bodies;
-    private Sprite[] heads; 
 
     private float thirst;
     private float actionTimer;
@@ -19,27 +17,22 @@ public class Patron : MonoBehaviour {
     private int coins;
     private bool atTable;
 
-    Race charRace;
-    Class charClass;
+    private Race charRace;
+    private Class charClass;
 
-    private void Awake() {
-        bodies = Resources.LoadAll("Races", typeof(Sprite)).Cast<Sprite>().ToArray();
-        heads = Resources.LoadAll("Classes", typeof(Sprite)).Cast<Sprite>().ToArray();
-
+    public Patron(Class patronClass, Race patronRace, float moveInterval, float actionInterval, IEnumerable<Sprite> character)
+    {
         gameObject.AddComponent<SpriteRenderer>();
         bodySprite = GetComponent<SpriteRenderer>();
 
         GameObject child = new GameObject();
+        child.name = "HelmSprite";
         child.transform.parent = gameObject.transform;
         child.AddComponent<SpriteRenderer>();
         helmSprite = child.GetComponent<SpriteRenderer>();
 
-        SetClass();
-        SetRace();
-
-        bodySprite.sprite = bodies[(int)charRace];
-        helmSprite.sprite = heads[(int)charClass];
-        Debug.Log("class = " + GetClass() + " race = " + GetRace());
+        bodySprite.sprite = character.ToArray()[0];
+        helmSprite.sprite = character.ToArray()[1];
         coins = Random.Range(5, 15);
         RandomThirst();
     }
@@ -49,55 +42,9 @@ public class Patron : MonoBehaviour {
         Fighter, Wizard, Thief, Cleric
     }
 
-    private void SetClass() {
-        int i = Random.Range(1, 5);
-        Debug.Log("i = " + i);
-        switch (i)
-        {
-            case 1:
-                charClass = Class.Fighter;
-                break;
-            case 2:
-                charClass = Class.Wizard;
-                break;
-            case 3:
-                charClass = Class.Thief;
-                break;
-            case 4:
-                charClass = Class.Cleric;
-                break;
-        }
-    }
-
-    public Class GetClass() {
-        return charClass;
-    }
-
     public enum Race
     {
         Human, Dwarf, Elf
-    }
-
-    private void SetRace() {
-        int i = Random.Range(1, 4);
-        Debug.Log("i2 = " + i);
-
-        switch (i)
-        {
-            case 1:
-                charRace = Race.Human;
-            break;
-            case 2:
-                charRace = Race.Dwarf;
-            break;
-            case 3:
-                charRace = Race.Elf;
-            break;
-        } 
-    }
-
-    public Race GetRace() {
-        return charRace;
     }
 
     private void RandomThirst()
