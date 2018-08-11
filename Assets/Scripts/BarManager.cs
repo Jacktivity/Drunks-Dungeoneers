@@ -2,8 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Class for managing the bar part of the Tavern. 
+ */
+
 public class BarManager : MonoBehaviour {
 
+    // Variables
     public DrinkTemplate[] drinks;
     public GameObject[] drinkTemplates;
     public GameObject maid;
@@ -29,7 +34,8 @@ public class BarManager : MonoBehaviour {
 
     /*
      * Setters
-     * */
+     */
+
     public void SetDrinks()
     {
         foreach (GameObject obj in drinkTemplates)
