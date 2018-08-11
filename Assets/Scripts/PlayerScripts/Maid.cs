@@ -83,6 +83,7 @@ public class Maid : MonoBehaviour {
      */
     public void SetDrink(DrinkTemplate newDrink)
     {
+        drink = newDrink;
         //drinkHeld.GetComponent<MaidsDrink>().setDrink(newDrink);
         drinkHeld.GetComponent<SpriteRenderer>().sprite = newDrink.sprite;
     }
