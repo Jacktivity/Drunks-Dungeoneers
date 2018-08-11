@@ -16,25 +16,35 @@ public class Patron : MonoBehaviour {
     private float thirstIncrease;
     private int coins;
     private bool atTable;
+    private int pathIndex;
+    private Vector2[] path;
+
 
     private Race charRace;
     private Class charClass;
 
-    public Patron(Class patronClass, Race patronRace, float moveInterval, float actionInterval, IEnumerable<Sprite> character)
+    public Patron(Class patronClass, Race patronRace, float moveInterval, float actionInterval
+        , IEnumerable<Sprite> character, IEnumerable<Vector2> path)
+    {
+        SetUpSprites(patronClass, patronRace, character);
+        this.path = path.ToArray();
+        coins = Random.Range(5, 15);
+        RandomThirst();
+    }
+
+    private void SetUpSprites(Class patronClass, Race patronRace, IEnumerable<Sprite> character)
     {
         gameObject.AddComponent<SpriteRenderer>();
         bodySprite = GetComponent<SpriteRenderer>();
-
+        gameObject.name = patronClass.ToString() + patronRace.ToString() + "Patron";
         GameObject child = new GameObject();
-        child.name = "HelmSprite";
+        child.name = "Helmet";
         child.transform.parent = gameObject.transform;
         child.AddComponent<SpriteRenderer>();
         helmSprite = child.GetComponent<SpriteRenderer>();
 
         bodySprite.sprite = character.ToArray()[0];
         helmSprite.sprite = character.ToArray()[1];
-        coins = Random.Range(5, 15);
-        RandomThirst();
     }
 
     public enum Class
@@ -101,9 +111,31 @@ public class Patron : MonoBehaviour {
         actionTimer += Time.deltaTime;
         if(actionTimer >= secondsPerMove)
         {
+
             actionTimer = 0;
             //Move patron toward table
         }
+    }
+
+    private void TraversePath()
+    {
+        pathIndex++;
+        if(pathIndex >= path.Length)
+        {
+            pathIndex = path.Length - 1;
+        }
+        if(pathIndex == path.Length)
+        {
+            atTable = true;
+        }
+        transform.position = path[pathIndex];
+    }
+
+    public void NewPath(IEnumerable<Vector2> newPath)
+    {
+        path = newPath.ToArray();
+        pathIndex = 0;
+        atTable = false;
     }
 
     public void GetDrink()//enum of the drink
@@ -125,7 +157,7 @@ public class Patron : MonoBehaviour {
         }
         else
         {
-
+            TraversePath();
         }
         
     }

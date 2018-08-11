@@ -15,7 +15,7 @@ public class PatronManager : MonoBehaviour {
         heads = (Sprite[])Resources.LoadAll("Classes", typeof(Sprite));
     }
 	
-    public void MakePatron()
+    public void MakePatron(IEnumerable<Vector2> destination)
     {
         Patron.Race randRace = (Patron.Race)Random.Range(0, 4);
         Patron.Class randClass = (Patron.Class)Random.Range(0, 3);
@@ -25,7 +25,7 @@ public class PatronManager : MonoBehaviour {
 
         Sprite[] character = { head, body };
 
-        patrons.Add(new Patron(randClass,randRace,0.5f,1f,character));
+        patrons.Add(new Patron(randClass,randRace,0.5f,1f,character, destination));
     }
 
 	// Update is called once per frame
