@@ -10,6 +10,8 @@ public class Maid : MonoBehaviour {
     private float vSpeed;
     private DrinkTemplate drink;
 
+    public GameObject GameManager;
+
     // Use this for initialization
     void Start()
     {
@@ -34,6 +36,11 @@ public class Maid : MonoBehaviour {
         else if (Input.GetKeyDown("d"))
         {
 
+        }
+        
+        if (Input.GetKeyDown("p"))
+        {
+            GameManager.GetComponent<UIController>().PauseGame(true);
         }
     }
     
