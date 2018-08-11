@@ -7,12 +7,13 @@ public class BarManager : MonoBehaviour {
     public DrinkTemplate[] drinks;
     public GameObject[] drinkTemplates;
     public GameObject maid;
+
 	// Use this for initialization
 	void Start ()
     {
+        this.maid = Instantiate(maid);
         SetDrinks();
-        Instantiate(maid);
-	}
+    }
 
 	// Update is called once per frame
 	void Update ()
@@ -25,6 +26,7 @@ public class BarManager : MonoBehaviour {
         int pos = Random.Range(0, drinks.Length);
         return drinks[pos];
     }
+
     /*
      * Setters
      * */
@@ -36,7 +38,6 @@ public class BarManager : MonoBehaviour {
             { 
                 obj.GetComponent<DrinkHolder>().SetDrink(SelectDrink());
             }
-
         }
     }
 

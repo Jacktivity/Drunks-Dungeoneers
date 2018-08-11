@@ -7,7 +7,7 @@ public class Maid : MonoBehaviour {
     // Variables
 
     public DrinkTemplate drink;
-    public GameObject drinkTemplate;
+    public GameObject drinkHeld;
 
     private int health;
     private Vector2 hSpeed;
@@ -20,7 +20,6 @@ public class Maid : MonoBehaviour {
         rb = this.GetComponent<Rigidbody2D>();
         vSpeed = new Vector2(0,0);
         hSpeed = new Vector2(0, 0);
-       
     }
 
     // Update is called once per frame
@@ -84,6 +83,7 @@ public class Maid : MonoBehaviour {
      */
     public void SetDrink(DrinkTemplate newDrink)
     {
-        drinkTemplate.GetComponent<MaidsDrink>().setDrink(newDrink);
+        //drinkHeld.GetComponent<MaidsDrink>().setDrink(newDrink);
+        drinkHeld.GetComponent<SpriteRenderer>().sprite = newDrink.sprite;
     }
 }

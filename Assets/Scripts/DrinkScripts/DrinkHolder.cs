@@ -9,8 +9,6 @@ public class DrinkHolder : MonoBehaviour
 
     public void OnMouseOver()
     {
-
-        Debug.Log("hover");
         if (Input.GetMouseButtonDown(0))
         {
             this.GetComponent<SpriteRenderer>().sprite = null;

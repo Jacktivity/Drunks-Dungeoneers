@@ -38,7 +38,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4817960881003506}
   - component: {fileID: 212372111763755122}
-  - component: {fileID: 114895656793769930}
   m_Layer: 0
   m_Name: DrinkTemplate
   m_TagString: Untagged
@@ -105,18 +104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   drink: {fileID: 11400000, guid: 0de8904bdafa4aa4eb206b1a6dbb4d18, type: 2}
-  drinkTemplate: {fileID: 1505413679113794}
---- !u!114 &114895656793769930
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1505413679113794}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2931010cb3e18544fb54fc1fef1658dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  drinkHeld: {fileID: 1505413679113794}
 --- !u!212 &212139754835061218
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -198,7 +186,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: a96b558625d956c4981563fd9959e931, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2f768635b6020be499d55e3db22b85bf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
