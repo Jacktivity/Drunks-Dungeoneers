@@ -13,6 +13,7 @@ public class DrinkHolder : MonoBehaviour
         {
             this.GetComponent<SpriteRenderer>().sprite = null;
             this.GetComponentInParent<BarManager>().SetMaidDrink(this.drinkTemplate);
+            
         }
     }
     public void SetDrink(DrinkTemplate newDrink)

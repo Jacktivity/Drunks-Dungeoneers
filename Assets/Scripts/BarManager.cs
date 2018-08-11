@@ -2,16 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/*
- * Class for managing the bar part of the Tavern. 
- */
-
 public class BarManager : MonoBehaviour {
 
-    // Variables
     public DrinkTemplate[] drinks;
     public GameObject[] drinkTemplates;
     public GameObject maid;
+
 
 	// Use this for initialization
 	void Start ()
@@ -23,8 +19,7 @@ public class BarManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        SetDrinks();
-	}
+    }
 
     public DrinkTemplate SelectDrink()
     {
@@ -34,8 +29,7 @@ public class BarManager : MonoBehaviour {
 
     /*
      * Setters
-     */
-
+     * */
     public void SetDrinks()
     {
         foreach (GameObject obj in drinkTemplates)
@@ -50,5 +44,12 @@ public class BarManager : MonoBehaviour {
     public void SetMaidDrink(DrinkTemplate drink)
     {
         maid.GetComponent<Maid>().SetDrink(drink);
+        StartCoroutine(DelayDrinkSpawn());
+    }
+
+    private IEnumerator DelayDrinkSpawn()
+    {
+        yield return new WaitForSeconds(5);
+        SetDrinks();
     }
 }

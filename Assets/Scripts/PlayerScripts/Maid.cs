@@ -25,8 +25,6 @@ public class Maid : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-       
-
         if (Input.GetKey("w"))
         {
             vSpeed = new Vector2(0, 2);
@@ -84,7 +82,6 @@ public class Maid : MonoBehaviour {
     public void SetDrink(DrinkTemplate newDrink)
     {
         drink = newDrink;
-        //drinkHeld.GetComponent<MaidsDrink>().setDrink(newDrink);
         drinkHeld.GetComponent<SpriteRenderer>().sprite = newDrink.sprite;
     }
 }
