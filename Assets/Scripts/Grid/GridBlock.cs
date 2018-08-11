@@ -10,6 +10,8 @@ public class GridBlock : MonoBehaviour {
 
     private void Start()
     {
+        grid = GetComponentInParent<TableGrid>();
+
         transform.position = grid.GetWorldPositionOfGrid(gridLocation);
         grid.AddTileToLocation(gridLocation, TileContent.Blocking);
     }
