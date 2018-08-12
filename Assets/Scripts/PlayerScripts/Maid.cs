@@ -103,8 +103,8 @@ public class Maid : MonoBehaviour {
         ////////////
         //DEBUG INPUT
         ////////////
-        if (Input.GetKeyDown("l"))
-            coins++;
+        //if (Input.GetKeyDown("l"))
+        //    coins++;
             
     }
     
