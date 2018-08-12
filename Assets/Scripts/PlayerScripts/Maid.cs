@@ -28,6 +28,7 @@ public class Maid : MonoBehaviour {
         vSpeed = new Vector2(0,0);
         hSpeed = new Vector2(0, 0);
         anim = GetComponent<Animator>();
+        health = 5;
 
         walkingRight = false;
         walkingLeft = false;
