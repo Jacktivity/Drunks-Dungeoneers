@@ -26,8 +26,6 @@ public class UIController : MonoBehaviour {
 
     public GameObject PlayerRef;
 
-  
-
 
     public void PauseGame()
     {
@@ -80,9 +78,13 @@ public class UIController : MonoBehaviour {
     private void UpdateHealth()
     {
         if (healthBar.Count > PlayerRef.GetComponent<Maid>().GetHealth())
+        {
             RemoveHealthIcon();
+        }
         else if (healthBar.Count < PlayerRef.GetComponent<Maid>().GetHealth())
+        {
             AddHealthIcon();
+        }
     }
 
     private void InitHealthUI()
@@ -118,11 +120,16 @@ public class UIController : MonoBehaviour {
 
     private void Start()
     {
+        PlayerRef = GameObject.FindGameObjectWithTag("Player");
         InitHealthUI();
     }
 
     private void Update()
     {
+        if (Input.GetKeyDown("p"))
+        {
+            TogglePauseMenu();
+        }
         UpdateHealth();
     }
 

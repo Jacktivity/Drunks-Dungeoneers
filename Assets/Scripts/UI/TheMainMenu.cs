@@ -41,7 +41,7 @@ public class TheMainMenu : MonoBehaviour
 
     public void TogglePlayButton()
     {
-        SceneManager.LoadScene("PlayScene");
+        SceneManager.LoadScene(1);
     }
 
     public void ToggleScoreboardButton()
