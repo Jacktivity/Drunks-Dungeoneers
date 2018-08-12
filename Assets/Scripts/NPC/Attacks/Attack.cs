@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Attack : MonoBehaviour {
-    private SpriteRenderer attackSprite;
-    private Vector3 startPosition;
-    private Vector3 endPosition;
-    private GameObject attacker;
+    protected SpriteRenderer attackSprite;
+    protected Vector3 startPosition;
+    protected Vector3 endPosition;
+    protected GameObject attacker;
 
-    private float speed;
-    private float time;
+    protected float speed;
+    protected float time;
 
 	// Use this for initialization
 	void Start () {
@@ -47,6 +47,15 @@ public class Attack : MonoBehaviour {
         {
             collision.gameObject.GetComponent<Patron>().PatronHit(0.1f);
         }
+        else
+        {
+            Miss(collision);
+        }
+    }
+
+    protected virtual void Miss(Collision collision)
+    {
+
     }
 
     public void SetDestination(Vector3 end)
