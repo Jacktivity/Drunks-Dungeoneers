@@ -4,44 +4,67 @@ using UnityEngine;
 using System.Linq;
 
 public class Patron : MonoBehaviour {
-    
-    [SerializeField] private float secondsPerMove;
-    [SerializeField] private float secondsPerAction;
+
+    Sprite[] character;
+    Sprite cloak;
+
+    private float secondsPerMove;
+    private float secondsPerAction;
 
     private SpriteRenderer bodySprite;
     private SpriteRenderer helmSprite;
-    private Sprite[] bodies;
-    private Sprite[] heads; 
 
     private float thirst;
     private float actionTimer;
     private float thirstIncrease;
     private int coins;
     private bool atTable;
+    public int pathIndex;
+    public Vector2[] path;
 
-    Race charRace;
-    Class charClass;
+    private Race charRace;
+    private Class charClass;
 
-    private void Awake() {
-        bodies = Resources.LoadAll("Races", typeof(Sprite)).Cast<Sprite>().ToArray();
-        heads = Resources.LoadAll("Classes", typeof(Sprite)).Cast<Sprite>().ToArray();
+    public void SetUpPatron(Class patronClass, Race patronRace, float moveInterval, float actionInterval
+        , IEnumerable<Sprite> character, IEnumerable<Vector2> path, Sprite cloak)
+    {
+        SetUpSprites(patronClass, patronRace, character, cloak);
+        ChangeOutfit();
+        this.path = path.ToArray();
+        coins = Random.Range(5, 15);
+        RandomThirst();
+    }
 
+    private void SetUpSprites(Class patronClass, Race patronRace, IEnumerable<Sprite> character, Sprite cloaked)
+    {
         gameObject.AddComponent<SpriteRenderer>();
         bodySprite = GetComponent<SpriteRenderer>();
-
+        gameObject.name = patronClass.ToString() + patronRace.ToString() + "Patron";
         GameObject child = new GameObject();
+        child.name = "Helmet";
         child.transform.parent = gameObject.transform;
         child.AddComponent<SpriteRenderer>();
         helmSprite = child.GetComponent<SpriteRenderer>();
 
-        SetClass();
-        SetRace();
+        cloak = cloaked;
 
-        bodySprite.sprite = bodies[(int)charRace];
-        helmSprite.sprite = heads[(int)charClass];
-        Debug.Log("class = " + GetClass() + " race = " + GetRace());
-        coins = Random.Range(5, 15);
-        RandomThirst();
+        this.character = character.ToArray();
+
+        
+    }
+
+    public void ChangeOutfit()
+    {
+        if(atTable)
+        {
+            bodySprite.sprite = character.ToArray()[0];
+            helmSprite.sprite = character.ToArray()[1];
+        }
+        else
+        {
+            helmSprite.sprite = null;
+            bodySprite.sprite = cloak;
+        }
     }
 
     public enum Class
@@ -49,55 +72,9 @@ public class Patron : MonoBehaviour {
         Fighter, Wizard, Thief, Cleric
     }
 
-    private void SetClass() {
-        int i = Random.Range(1, 5);
-        Debug.Log("i = " + i);
-        switch (i)
-        {
-            case 1:
-                charClass = Class.Fighter;
-                break;
-            case 2:
-                charClass = Class.Wizard;
-                break;
-            case 3:
-                charClass = Class.Thief;
-                break;
-            case 4:
-                charClass = Class.Cleric;
-                break;
-        }
-    }
-
-    public Class GetClass() {
-        return charClass;
-    }
-
     public enum Race
     {
-        Human, Dwarf, Elf
-    }
-
-    private void SetRace() {
-        int i = Random.Range(1, 4);
-        Debug.Log("i2 = " + i);
-
-        switch (i)
-        {
-            case 1:
-                charRace = Race.Human;
-            break;
-            case 2:
-                charRace = Race.Dwarf;
-            break;
-            case 3:
-                charRace = Race.Elf;
-            break;
-        } 
-    }
-
-    public Race GetRace() {
-        return charRace;
+        Human, Dwarf, Elf, Orc
     }
 
     private void RandomThirst()
@@ -154,9 +131,31 @@ public class Patron : MonoBehaviour {
         actionTimer += Time.deltaTime;
         if(actionTimer >= secondsPerMove)
         {
+
             actionTimer = 0;
             //Move patron toward table
         }
+    }
+
+    private void TraversePath()
+    {
+        pathIndex++;
+        if(pathIndex >= path.Length)
+        {
+            pathIndex = path.Length - 1;
+        }
+        if(pathIndex == path.Length-1)
+        {
+            atTable = true;
+        }
+        transform.position = path[pathIndex];
+    }
+
+    public void NewPath(IEnumerable<Vector2> newPath)
+    {
+        path = newPath.ToArray();
+        pathIndex = 0;
+        atTable = false;
     }
 
     public void GetDrink()//enum of the drink
@@ -166,19 +165,37 @@ public class Patron : MonoBehaviour {
         RandomThirst();
         //Throw event to award player points
         //Remove coin = to points given
+        if(coins <= 0)
+        {
+            //Call event to get new path out
+            pathIndex = 0;
+        }
     }
 
 	// Update is called once per frame
 	void Update ()
     {
-        if(atTable)
+        bool tempAtTable = atTable;
+        if (coins <= 0)
+        {
+            if(pathIndex == path.Length-1)
+            {
+                Destroy(this);
+            }
+        }
+        else if (atTable)
         {
             PerformAction();
             ThirstCheck();
         }
         else
         {
+            TraversePath();
+        }
 
+        if(tempAtTable != atTable)
+        {
+            ChangeOutfit();
         }
         
     }
