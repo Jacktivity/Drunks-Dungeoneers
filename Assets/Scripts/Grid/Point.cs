@@ -2,6 +2,8 @@
 
 public enum TileContent
 {
+    Empty,
+    Patron,
     Seat,
     FullSeat,
     Blocking

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: LongTableWith4Seats
+  m_EditorClassIdentifier: Assembly-CSharp::TableObject
+  chair: {fileID: 11400000, guid: da36a3b5f1c10b542bfac249b497eeca, type: 2}
+  addedLocations:
+  - {x: 0, y: -1}
+  seatLocations:
+  - {x: 1, y: 0}
+  - {x: -1, y: 0}
+  sprite: {fileID: 21300000, guid: 7bb4d09d28449b6408329a2b60a4f63c, type: 3}
