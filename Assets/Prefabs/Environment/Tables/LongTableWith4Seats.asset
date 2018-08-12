@@ -18,3 +18,5 @@ MonoBehaviour:
   - {x: 1, y: 0}
   - {x: -1, y: 0}
   sprite: {fileID: 21300000, guid: 7bb4d09d28449b6408329a2b60a4f63c, type: 3}
+  middleGridx: 1
+  middleGridY: 0

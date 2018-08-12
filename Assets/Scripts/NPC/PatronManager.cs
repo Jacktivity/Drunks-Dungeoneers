@@ -9,12 +9,15 @@ public class PatronManager : MonoBehaviour {
     [SerializeField] private Sprite cloak;
 
     List<Patron> patrons;
+
+    PathFinder pathFinder;
+
 	// Use this for initialization
 	void Start () {
         patrons = new List<Patron>();
     }
 	
-    public void MakePatron(IEnumerable<Vector2> destination)
+    public void MakePatron()
     {
         Patron.Race randRace = (Patron.Race)Random.Range(0, 4);
         Patron.Class randClass = (Patron.Class)Random.Range(0, 3);
@@ -28,6 +31,9 @@ public class PatronManager : MonoBehaviour {
         patron.tag = "Patron";
         patron.AddComponent<Patron>();
         patron.transform.parent = gameObject.transform;
+
+
+        List<Vector2> destination = pathFinder.GetPathFromSpawnToSeat();
         
 
         patron.GetComponent<Patron>().SetUpPatron(randClass,randRace,0.1f,1f,character,destination, cloak);

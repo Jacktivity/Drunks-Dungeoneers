@@ -3,16 +3,26 @@ using UnityEngine;
 
 public class TableGrid : MonoBehaviour
 {
-
     public int sizeX = 10, sizeY = 10;
     public float gridSize = 1.0f;
 
-    public List<Vector2> worldBlock;
+    [Tooltip("How many tiles around the edge of the map that tables cannot spawn on")]
+    public int NoSpawnZone = 1;
 
+    private List<Vector2> spawnPoints;
+    private List<Vector2> seatLocations;
+    private List<Vector2> usedSeats;
+
+    public bool drawGrid = true;
+    public bool tileContentDebug = false;
     private Point[,] grid;
 
     private void Awake()
     {
+        spawnPoints = new List<Vector2>();
+        seatLocations = new List<Vector2>();
+        usedSeats = new List<Vector2>();
+
         grid = new Point[sizeX, sizeY];
 
         for (int x = 0; x < sizeX; x++)
@@ -21,6 +31,49 @@ public class TableGrid : MonoBehaviour
             {
                 grid[x, y] = new Point(new Vector2(x, y));
             }
+        }
+    }
+
+    /// <summary>
+    /// Returns a random spawn location
+    /// </summary>
+    /// <returns></returns>
+    public Vector2 GetSpawnPoint()
+    {
+        return spawnPoints[Random.Range(0, spawnPoints.Count)];
+    }
+
+    /// <summary>
+    /// Returns the location of a free seat, will return null if no free seats
+    /// </summary>
+    /// <returns>Free seat on grid, or null if none available</returns>
+    public Vector2? GetFreeSeat()
+    {
+        if(seatLocations.Count > 0)
+        {
+            int randomRange = Random.Range(0, seatLocations.Count);
+            Vector2 location = seatLocations[randomRange];
+
+            //Move seat to Used
+            seatLocations.RemoveAt(randomRange);
+            usedSeats.Add(location);
+
+            return location;
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// Release a seat for another patron to use
+    /// </summary>
+    /// <param name="location">Location of the freed seat</param>
+    public void ReleaseSeat(Vector2 location)
+    {
+        if(usedSeats.Contains(location))
+        {
+            usedSeats.Remove(location);
+            seatLocations.Add(location);
         }
     }
 
@@ -80,7 +133,7 @@ public class TableGrid : MonoBehaviour
         Point point = grid[(int)location.x, (int)location.y];
 
         //If null then the point is empty
-        if (point.tileContent == TileContent.Seat || point.tileContent == TileContent.Empty)
+        if (point.tileContent == TileContent.Seat || point.tileContent <= TileContent.Empty)
         {
             return true;
         }
@@ -95,10 +148,29 @@ public class TableGrid : MonoBehaviour
     /// <returns>True if location is empty</returns>
     public bool IsTileFreeToSpawn(Vector2 location)
     {
-        if (location.x >= sizeX || location.x < 0 || location.y >= sizeY || location.y < 0)
+        if (location.x >= (sizeX- NoSpawnZone) || location.x < NoSpawnZone || location.y >= (sizeY - NoSpawnZone) || location.y < NoSpawnZone)
             return false;
 
-        return (grid[(int)location.x, (int)location.y].tileContent == TileContent.Empty);
+        bool spawnFree = grid[(int)location.x, (int)location.y].tileContent == TileContent.Empty;
+
+        if (spawnFree)
+        {
+            for (int x = -1; x < 2; x++)
+            {
+                for (int y = -1; y < 2; y++)
+                {
+                    spawnFree = (grid[(int)location.x + x, (int)location.y + y].tileContent == TileContent.Empty);
+
+                    if (!spawnFree)
+                    {
+                        return false;
+                    }                       
+                }
+            }
+        }
+
+
+        return spawnFree;
     }
 
     /// <summary>
@@ -114,9 +186,11 @@ public class TableGrid : MonoBehaviour
             return false;
         }
 
-        foreach (Vector2 loc in otherLocations)
+        Vector2 tileLocation;
+        foreach (Vector2 otherLocation in otherLocations)
         {
-            if (!IsTileFreeToSpawn(loc))
+            tileLocation = new Vector2(otherLocation.x + location.x, otherLocation.y + location.y);
+            if (!IsTileFreeToSpawn(tileLocation))
             {
                 return false;
             }
@@ -133,16 +207,41 @@ public class TableGrid : MonoBehaviour
     public void AddTileToLocation(Vector2 location, TileContent tileContent)
     {
         grid[(int)location.x, (int)location.y].tileContent = tileContent;
+
+        //If a tile is a spawn point add it to the list of spawn locations
+        if(tileContent == TileContent.PatronSpawn)
+        {
+            spawnPoints.Add(location);
+        }
+        else if(tileContent == TileContent.Seat)
+        {
+            seatLocations.Add(location);
+        }
+
     }
 
     /// <summary>
-    /// Returns the world position of the grid
+    /// Returns the world position of the grid location
     /// </summary>
-    /// <param name="coord">the grid coord we want to get the position of</param>
-    /// <returns>The 3d representaion of the grid position</returns>
-    public Vector3 GetWorldPositionOfGrid(Vector2 coord)
+    /// <param name="coord">The grid location to convert</param>
+    /// <param name="middleX">If true will return the middle of x not the start/param>
+    /// <param name="middleY">if true will return the middle of y not the start</param>
+    /// <returns>Returns to world position of the grid</returns>
+    public Vector3 GetWorldPositionOfGrid(Vector2 coord, bool middleX = true, bool middleY = true)
     {
-        return new Vector3((gridSize / 2) + transform.position.x + (coord.x * gridSize), (gridSize / 2) + transform.position.y + (coord.y * gridSize));
+        float gridMiddleX = (middleX ? (gridSize / 2) : 0);
+        float gridMiddleY = (middleY ? (gridSize / 2) : 0);
+        return new Vector3(gridMiddleX + transform.position.x + (coord.x * gridSize), gridMiddleY + transform.position.y + (coord.y * gridSize));
+    }
+
+    public void ToggleGrid()
+    {
+        drawGrid = !drawGrid;
+    }
+
+    public void ToggleTileContent()
+    {
+        tileContentDebug = !tileContentDebug;
     }
 
     /// <summary>
@@ -163,18 +262,61 @@ public class TableGrid : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Vector3 position = transform.position;
-
-        for (float y = 0; y <= sizeY; y++)
+        if (drawGrid)
         {
-            Gizmos.DrawLine(new Vector3(position.x, position.y + (y * gridSize)),
-                new Vector3(position.x + sizeX * gridSize, position.y + (y * gridSize)));
-        }
+            Vector3 position = transform.position;
 
-        for (float x = 0; x <= sizeX; x++)
-        {
-            Gizmos.DrawLine(new Vector3(position.x + (x * gridSize), position.y),
-                new Vector3(position.x + (x * gridSize), position.y + (sizeY * gridSize)));
+            for (int y = 0; y <= sizeY; y++)
+            {
+                Gizmos.DrawLine(new Vector3(position.x, position.y + (y * gridSize)),
+                    new Vector3(position.x + sizeX * gridSize, position.y + (y * gridSize)));
+            }
+
+            for (int x = 0; x <= sizeX; x++)
+            {
+                Gizmos.DrawLine(new Vector3(position.x + (x * gridSize), position.y),
+                    new Vector3(position.x + (x * gridSize), position.y + (sizeY * gridSize)));
+            }
+
+            if(tileContentDebug)
+            {
+                float halfGrid = gridSize / 2;
+                Point currentPoint;
+
+                for(int x = 0; x < sizeX; x++)
+                {
+                    for(int y = 0; y < sizeY; y++)
+                    {
+                        currentPoint = grid[x, y];
+
+                        switch (currentPoint.tileContent)
+                        {
+                            case TileContent.PatronSpawn:
+                                Gizmos.color = new Color(0, 1, 0, 1);
+                                break;
+                            case TileContent.Empty:
+                                Gizmos.color = new Color(1, 1, 1, 1);
+                                break;
+                            case TileContent.Patron:
+                                Gizmos.color = new Color(0, 0, 0, 1);
+                                break;
+                            case TileContent.Seat:
+                                Gizmos.color = new Color(0, 0, 1, 1);
+                                break;
+                            case TileContent.FullSeat:
+                                Gizmos.color = new Color(0, 1, 1, 1);
+                                break;
+                            case TileContent.Blocking:
+                                Gizmos.color = new Color(1, 0, 0, 1);
+                                break;
+                            default:
+                                break;
+                        }
+
+                        Gizmos.DrawCube(GetWorldPositionOfGrid(new Vector2(x, y)), new Vector3(gridSize,gridSize,1));
+                    }
+                }
+            }
         }
     }
 

@@ -15,7 +15,6 @@ public class ButtonTest : MonoBehaviour
     }
 
     void TaskOnClick() {
-        Vector2[] path = { new Vector2(0, 0) };
-        GetComponent<PatronManager>().MakePatron(path);
+        GetComponent<PatronManager>().MakePatron();
     }
 }

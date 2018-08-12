@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class OChair : MonoBehaviour {
 
@@ -16,11 +14,6 @@ public class OChair : MonoBehaviour {
         GetComponent<SpriteRenderer>().sprite = chairObject.sprite;
         grid = GetComponentInParent<TableGrid>();
 
-        grid.AddTileToLocation(location, TileContent.Seat);
-
-        foreach(Vector2 extendedChair in chairObject.addedLocations)
-        {
-            grid.AddTileToLocation(new Vector2(location.x + extendedChair.x, location.y + extendedChair.y), TileContent.Seat);
-        }
+        transform.position = grid.GetWorldPositionOfGrid(location, chairObject.middleGridx, chairObject.middleGridY);    
     }
 }

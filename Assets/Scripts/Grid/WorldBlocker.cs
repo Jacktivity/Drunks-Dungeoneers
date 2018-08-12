@@ -1,17 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class WorldBlocker : MonoBehaviour {
 
     public Vector2 gridLocation;
+    public TileContent tileContent;
 
     TableGrid grid;
 
     private void Start()
     {
         grid = GetComponentInParent<TableGrid>();
-        grid.AddTileToLocation(gridLocation, TileContent.Blocking);
+        grid.AddTileToLocation(gridLocation, tileContent);
     }
 
     private void OnDrawGizmos()
@@ -21,7 +20,15 @@ public class WorldBlocker : MonoBehaviour {
         if (grid == null)
             grid = GetComponentInParent<TableGrid>();
 
-        Gizmos.color = new Color(1, 0, 0, 1);
-        Gizmos.DrawCube(new Vector3((position.x), (position.y)), new Vector3(grid.gridSize,grid.gridSize,1)); 
+        if (tileContent == TileContent.Blocking)
+        {
+            Gizmos.color = new Color(1, 0, 0, 1);
+        }
+        else if (tileContent == TileContent.PatronSpawn)
+        {
+            Gizmos.color = new Color(0, 1, 0, 1);
+        }
+
+        Gizmos.DrawCube(position, new Vector3(grid.gridSize,grid.gridSize,1)); 
     }
 }

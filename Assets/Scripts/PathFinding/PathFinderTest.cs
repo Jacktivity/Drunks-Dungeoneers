@@ -25,7 +25,7 @@ public class PathFinderTest : MonoBehaviour {
 
     public void GetPath()
     {
-        path = pathFinder.GetPath(startLocation, endLocation);
+        path = pathFinder.GetPathFromSpawnToSeat();
         index = 0;
     }
 

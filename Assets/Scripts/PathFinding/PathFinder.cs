@@ -117,6 +117,24 @@ public class PathFinder : MonoBehaviour {
     }
 
     /// <summary>
+    /// Gets a free seat and gets a random spawn point
+    /// then gets a path between them
+    /// </summary>
+    /// <returns>A Path between the spawn and the seat</returns>
+    public List<Vector2> GetPathFromSpawnToSeat()
+    {
+        Vector2 spawnLocation = grid.GetSpawnPoint();
+        Vector2? seatLocation = grid.GetFreeSeat();
+
+        if(seatLocation != null)
+        {
+            return GetPath(spawnLocation, seatLocation.Value);
+        }
+
+        return null;
+    }
+
+    /// <summary>
     /// Returns a path to and from the 
     /// </summary>
     /// <param name="from"></param>

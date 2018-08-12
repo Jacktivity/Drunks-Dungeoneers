@@ -2,6 +2,7 @@
 
 public enum TileContent
 {
+    PatronSpawn,
     Empty,
     Patron,
     Seat,
@@ -14,6 +15,7 @@ public class Point
     public Point(Vector2 location)
     {
         this.location = location;
+        tileContent = TileContent.Empty;
     }
 
     public TileContent tileContent;

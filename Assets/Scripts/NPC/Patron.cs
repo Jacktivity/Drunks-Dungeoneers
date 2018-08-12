@@ -191,13 +191,12 @@ public class Patron : MonoBehaviour {
         else
         {
             TraversePath();
-        }
 
-        if(tempAtTable != atTable)
-        {
-            ChangeOutfit();
-        }
-        
+            if (tempAtTable != atTable)
+            {
+                ChangeOutfit();
+            }
+        }        
     }
 
     private void OnValidate()
