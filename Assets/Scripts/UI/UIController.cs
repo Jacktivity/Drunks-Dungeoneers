@@ -144,23 +144,25 @@ public class UIController : MonoBehaviour {
 
     private void Start()
     {
-        playerRef = GameObject.FindGameObjectWithTag("Player");
-        InitHealthUI();
-
         //Get component references.
+        playerRef = GameObject.FindGameObjectWithTag("Player");
         coinTextRef = coinText.GetComponent<Text>();
         maidScript = playerRef.GetComponent<Maid>();
         timerTextRef = timerText.GetComponent<Text>();
+
+
+        InitHealthUI();
     }
 
     private void Update()
     {
         if (Input.GetKeyDown("p"))
+        {
             TogglePauseMenu();
-
-        UpdateHealth();
+        }
         UpdateCoins();
         UpdateDrinks();
+        UpdateHealth();
     }
 
 }
