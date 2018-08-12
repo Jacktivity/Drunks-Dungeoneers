@@ -9,6 +9,7 @@ public class PathFinderTest : MonoBehaviour {
 
     public Vector2 startLocation;
     public Vector2 endLocation;
+    public Vector2 location;
 
     public float stepDelay = 1.0f;
 
@@ -27,6 +28,8 @@ public class PathFinderTest : MonoBehaviour {
     {
         path = pathFinder.GetPathFromSpawnToSeat();
         index = 0;
+        location = path[index];
+        grid.Taketile(location);
     }
 
     private void Update()
@@ -37,6 +40,11 @@ public class PathFinderTest : MonoBehaviour {
             {
                 Vector3 newPosition = grid.GetWorldPositionOfGrid(path[index]);
                 transform.position = newPosition;
+
+
+                grid.Taketile(path[index], location);
+                location = path[index];
+
                 index++;
             }
             else

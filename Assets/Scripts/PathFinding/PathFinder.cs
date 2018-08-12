@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PathFinder : MonoBehaviour {
 
-    public TableGrid grid;
+    [SerializeField] private TableGrid grid;
     private readonly float straitLength = 1;
 
     float Heuristic(Vector2 from, Vector2 goal)

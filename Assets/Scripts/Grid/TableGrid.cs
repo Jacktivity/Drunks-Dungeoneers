@@ -78,7 +78,7 @@ public class TableGrid : MonoBehaviour
     }
 
     /// <summary>
-    /// Changed an empty tile or seat to used stopping others from using it    /// 
+    /// Changed an empty or seat tile to used so  it stops getting used for others patrons
     /// </summary>
     /// <param name="takeTile">Tile to be used by the patron</param>
     /// <param name="releaseTile">releasing the tile the patron was on null if no tile</param>
@@ -89,7 +89,7 @@ public class TableGrid : MonoBehaviour
         if (releaseTile != null)
         {
             //Get the current tile
-            tile = grid[(int)releaseTile.Value.x, (int)releaseTile.Value.x];
+            tile = grid[(int)releaseTile.Value.x, (int)releaseTile.Value.y];
 
             //If the tile was a seat set it back as a seat 
             if (tile.tileContent == TileContent.FullSeat)
@@ -103,7 +103,7 @@ public class TableGrid : MonoBehaviour
             }
 
             //update the tile
-            grid[(int)releaseTile.Value.x, (int)releaseTile.Value.x] = tile;
+            grid[(int)releaseTile.Value.x, (int)releaseTile.Value.y] = tile;
         }
 
         //Update the tile that a patron is going to move to
@@ -117,6 +117,8 @@ public class TableGrid : MonoBehaviour
         {
             tile.tileContent = TileContent.FullSeat;
         }
+
+        grid[(int)takeTile.x, (int)takeTile.y] = tile;
 
     }
 

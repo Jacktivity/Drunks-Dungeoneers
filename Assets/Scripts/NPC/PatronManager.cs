@@ -4,6 +4,8 @@ using UnityEngine;
 
 
 public class PatronManager : MonoBehaviour {
+    [SerializeField] private TableGrid grid;
+
     [SerializeField] private Sprite[] bodies;
     [SerializeField] private Sprite[] heads;
     [SerializeField] private Sprite cloak;
@@ -15,6 +17,7 @@ public class PatronManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         patrons = new List<Patron>();
+        pathFinder = Camera.main.GetComponent<PathFinder>();
     }
 	
     public void MakePatron()
@@ -30,8 +33,9 @@ public class PatronManager : MonoBehaviour {
         GameObject patron = new GameObject();
         patron.tag = "Patron";
         patron.AddComponent<Patron>();
-        patron.transform.parent = gameObject.transform;
+        patron.transform.parent = grid.transform;
 
+        patrons.Add(patron.GetComponent<Patron>());
 
         List<Vector2> destination = pathFinder.GetPathFromSpawnToSeat();
         

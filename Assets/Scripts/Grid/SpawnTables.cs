@@ -1,16 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnTables : MonoBehaviour {
 
+    [SerializeField] private GameObject tablePrefab;
+
+    /// <summary>
+    /// How many times does it have to fail before it stops spawing tables
+    /// Stops it from creating an infinity loop
+    /// </summary>
+    [SerializeField] private int failsafeMax = 100;
+
+    private int failsafe = 100;
+
+    /// <summary>
+    ///List of tableObjects that can be spawned into the world
+    /// </summary>
     public List<TableObject> tables;
 
-    public GameObject tablePrefab;
-
-    public List<Vector2> locations;
-
-    public int numberOfTablesToSpawn = 7;
+    /// <summary>
+    /// Number of tables we are going to try and spawn
+    /// </summary>
+    public int numberOfTablesToSpawn = 7;   
 
     private TableGrid grid;
 
@@ -18,13 +29,14 @@ public class SpawnTables : MonoBehaviour {
     {
         grid = GetComponentInParent<TableGrid>();
 
-        while(numberOfTablesToSpawn > 0)
+        while(numberOfTablesToSpawn > 0 && failsafe > 0)
         {
             Vector2 spawnPosition = new Vector2(Random.Range(0, grid.sizeX), Random.Range(0, grid.sizeY));
             TableObject tableToSpawn = tables[Random.Range(0, tables.Count)];
 
             if(!grid.CheckIfcanSpawn(spawnPosition, tableToSpawn.addedLocations))
             {
+                failsafe--;
                 //get a new position table combo
                 continue;
             }
@@ -36,6 +48,7 @@ public class SpawnTables : MonoBehaviour {
                 Vector2 charLocation = new Vector2(spawnPosition.x + chairLocation.x, spawnPosition.y + chairLocation.y);
                 if (!grid.CheckIfcanSpawn(charLocation, tableToSpawn.chair.addedLocations))
                 {
+                    failsafe--;
                     canSpawn = false;
                     break;
                 }
@@ -43,6 +56,8 @@ public class SpawnTables : MonoBehaviour {
 
             if (canSpawn)
             {
+                failsafe = failsafeMax;
+
                 //Spawn the table
                 GameObject table = (GameObject)Instantiate(tablePrefab, transform);
                 OTable tableObject = table.GetComponent<OTable>();
@@ -51,8 +66,6 @@ public class SpawnTables : MonoBehaviour {
 
                 //Set the table spawn location to blocking
                 grid.AddTileToLocation(spawnPosition, TileContent.Blocking);
-
-                locations.Add(spawnPosition);
 
                 //if the table is bigger than one square set all tiles as blocking
                 Vector2 location;

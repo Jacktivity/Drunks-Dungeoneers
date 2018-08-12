@@ -21,6 +21,7 @@ public class Patron : MonoBehaviour {
     private bool atTable;
     public int pathIndex;
     public Vector2[] path;
+    private TableGrid grid;
 
     private Race charRace;
     private Class charClass;
@@ -31,26 +32,30 @@ public class Patron : MonoBehaviour {
         SetUpSprites(patronClass, patronRace, character, cloak);
         ChangeOutfit();
         this.path = path.ToArray();
+        pathIndex = 0;
         coins = Random.Range(5, 15);
         RandomThirst();
+
+        grid = GetComponentInParent<TableGrid>();
     }
 
     private void SetUpSprites(Class patronClass, Race patronRace, IEnumerable<Sprite> character, Sprite cloaked)
-    {
-        gameObject.AddComponent<SpriteRenderer>();
-        bodySprite = GetComponent<SpriteRenderer>();
+    {        
+        bodySprite = gameObject.AddComponent<SpriteRenderer>();
         gameObject.name = patronClass.ToString() + patronRace.ToString() + "Patron";
         GameObject child = new GameObject();
         child.name = "Helmet";
         child.transform.parent = gameObject.transform;
+
+        helmSprite = child.AddComponent<SpriteRenderer>();
+        /*
         child.AddComponent<SpriteRenderer>();
         helmSprite = child.GetComponent<SpriteRenderer>();
+        */
 
         cloak = cloaked;
 
-        this.character = character.ToArray();
-
-        
+        this.character = character.ToArray();        
     }
 
     public void ChangeOutfit()
@@ -134,6 +139,7 @@ public class Patron : MonoBehaviour {
 
             actionTimer = 0;
             //Move patron toward table
+            TraversePath();
         }
     }
 
@@ -148,7 +154,9 @@ public class Patron : MonoBehaviour {
         {
             atTable = true;
         }
-        transform.position = path[pathIndex];
+        grid.Taketile(path[pathIndex], path[pathIndex - 1]);
+
+        transform.position = grid.GetWorldPositionOfGrid(path[pathIndex]);
     }
 
     public void NewPath(IEnumerable<Vector2> newPath)
@@ -190,7 +198,8 @@ public class Patron : MonoBehaviour {
         }
         else
         {
-            TraversePath();
+            //TraversePath();
+            MoveAction();
 
             if (tempAtTable != atTable)
             {
@@ -201,7 +210,7 @@ public class Patron : MonoBehaviour {
 
     private void OnValidate()
     {
-        secondsPerMove = Mathf.Clamp(secondsPerMove, 0.1f, 1);
+        secondsPerMove = Mathf.Clamp(secondsPerMove, 0.5f, 2f);
         secondsPerAction = Mathf.Clamp(secondsPerAction, 0.5f, 5);
     }
 }
