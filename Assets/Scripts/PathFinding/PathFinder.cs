@@ -4,17 +4,21 @@ using UnityEngine;
 public class PathFinder : MonoBehaviour {
 
     public TableGrid grid;
-
-    float straitLength = 1, diaganalLength = 1.4f;
+    private readonly float straitLength = 1;
 
     float Heuristic(Vector2 from, Vector2 goal)
     {
         float dx = Mathf.Abs(from.x - goal.x);
         float dy = Mathf.Abs(from.y - goal.y);
-        return straitLength * (dx + dy) + (diaganalLength - 2 * straitLength) + Mathf.Min(dx, dy);
+        return straitLength * (dx + dy);
     }
 
-
+    /// <summary>
+    /// Gets the grid locations with the lowest score to the end node
+    /// </summary>
+    /// <param name="openSet">Available position that have not been used</param>
+    /// <param name="fScore">The fscores for all of the grid locations</param>
+    /// <returns></returns>
     Vector2 GetLowestFScore(List<Vector2> openSet, Dictionary<Vector2, float> fScore)
     {
         Vector2 current = openSet[0];
@@ -34,6 +38,12 @@ public class PathFinder : MonoBehaviour {
         return current;
     }
 
+    /// <summary>
+    /// Creates the path then flips it so it is the right way round
+    /// </summary>
+    /// <param name="cameFrom">The list of vectors and where they came from</param>
+    /// <param name="current">The current and final position</param>
+    /// <returns></returns>
     List<Vector2> ConstructPath(Dictionary<Vector2, Vector2> cameFrom, Vector2 current)
     {
         List<Vector2> invertedPath = new List<Vector2>();
@@ -56,12 +66,18 @@ public class PathFinder : MonoBehaviour {
         return path;
     }
 
+    /// <summary>
+    /// Gets all the valid neightbors for the current node
+    /// </summary>
+    /// <param name="current"></param>
+    /// <returns></returns>
     List<Vector2> getNeighbors(Vector2 current)
     {
         List<Vector2> neighbors = new List<Vector2>();
 
         Vector2 neighbor = current;
         neighbor.x++;
+
         if(grid.IsTileFree(neighbor))
             neighbors.Add(neighbor);
 
@@ -83,44 +99,19 @@ public class PathFinder : MonoBehaviour {
         if (grid.IsTileFree(neighbor))
             neighbors.Add(neighbor);
 
-        neighbor = current;
-        neighbor.x++;
-        neighbor.y++;
-
-        if (grid.IsTileFree(neighbor))
-            neighbors.Add(neighbor);
-
-        neighbor = current;
-        neighbor.x--;
-        neighbor.y++;
-
-        if (grid.IsTileFree(neighbor))
-            neighbors.Add(neighbor);
-
-        neighbor = current;
-        neighbor.x--;
-        neighbor.y--;
-
-        if (grid.IsTileFree(neighbor))
-            neighbors.Add(neighbor);
-
-        neighbor = current;
-        neighbor.x++;
-        neighbor.y--;
-
-        if (grid.IsTileFree(neighbor))
-            neighbors.Add(neighbor);
-
         return neighbors;
     }
 
     float DistanceBetween(Vector2 current, Vector2 neighbor)
     {
         //If both are differnet then the neighbor is diaganal
+        //Used for diaganal movement
+        /*
         if(current.x != neighbor.x && current.y != neighbor.y)
         {
             return diaganalLength;
         }
+        */
 
         return straitLength;
     }
@@ -130,7 +121,7 @@ public class PathFinder : MonoBehaviour {
     /// </summary>
     /// <param name="from"></param>
     /// <param name="to"></param>
-    /// <returns></returns>
+    /// <returns>Returns the generated path or will return null if no path is available</returns>
     public List<Vector2> GetPath(Vector2 from, Vector2 to)
     {
         //Nodes already calculated
@@ -157,6 +148,7 @@ public class PathFinder : MonoBehaviour {
 
         while(openSet.Count != 0)
         {
+            //get the grid space with the lowest score to the end grid
             Vector2 current = GetLowestFScore(openSet, fScore);
 
             if(current == to)
@@ -164,6 +156,7 @@ public class PathFinder : MonoBehaviour {
                 return ConstructPath(cameFrom, current);
             }
 
+            //Place this grid location into the closed set
             openSet.Remove(current);
             closedSet.Add(current);
 

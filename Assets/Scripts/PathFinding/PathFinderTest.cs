@@ -7,6 +7,9 @@ public class PathFinderTest : MonoBehaviour {
     public PathFinder pathFinder;
     public TableGrid grid;
 
+    public Vector2 startLocation;
+    public Vector2 endLocation;
+
     public float stepDelay = 1.0f;
 
     [SerializeField]
@@ -22,7 +25,7 @@ public class PathFinderTest : MonoBehaviour {
 
     public void GetPath()
     {
-        path = pathFinder.GetPath(new Vector2(1, 1), new Vector2(9, 9));
+        path = pathFinder.GetPath(startLocation, endLocation);
         index = 0;
     }
 

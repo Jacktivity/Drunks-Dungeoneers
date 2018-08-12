@@ -12,6 +12,53 @@ class TableGridEditor : Editor
     private void OnEnable()
     {
         tableGrid = (TableGrid)target;
+        SceneView.onSceneGUIDelegate = GridUpdate;
+    }
+
+    //Draw blocking zones on the grid
+    void GridUpdate(SceneView sceneView)
+    {
+        Event e = Event.current;
+
+        Ray ray = Camera.current.ScreenPointToRay(new Vector3(e.mousePosition.x, -e.mousePosition.y + Camera.current.pixelHeight));
+        Vector3 mousePos = ray.origin;
+
+        if(e.isKey && e.character == 'a')
+        {
+            if (mousePos.x < (tableGrid.transform.position.x + (tableGrid.gridSize * tableGrid.sizeX)) &&
+                mousePos.y < (tableGrid.transform.position.y + (tableGrid.gridSize * tableGrid.sizeY)))
+            {
+
+                GameObject obj;
+                UnityEngine.Object prefab = PrefabUtility.GetCorrespondingObjectFromSource(Selection.activeObject);
+
+                if (prefab)
+                {
+                    bool found = false;
+
+                    WorldBlocker[] currentBlocking = tableGrid.GetComponentsInChildren<WorldBlocker>();
+                    Vector3 aligned = new Vector3(Mathf.Floor(mousePos.x / tableGrid.gridSize) + (tableGrid.gridSize / 2), Mathf.Floor(mousePos.y / tableGrid.gridSize) + (tableGrid.gridSize / 2));
+                    if(currentBlocking.Length > 0)
+                        foreach (WorldBlocker block in currentBlocking)
+                        {
+                            if(block.transform.position == aligned)
+                            {
+                                found = true;
+                                break;
+                            }
+                        }
+
+                    if (!found)
+                    {
+                        obj = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
+
+                        obj.transform.SetParent(tableGrid.transform);
+                        obj.transform.position = aligned;
+                        obj.GetComponent<WorldBlocker>().gridLocation = new Vector2(Mathf.Floor(mousePos.x / tableGrid.gridSize) - tableGrid.transform.position.x, Mathf.Floor(mousePos.y / tableGrid.gridSize) - tableGrid.transform.position.y);
+                    }
+                }
+            }
+        }        
     }
 
     public override void OnInspectorGUI()
