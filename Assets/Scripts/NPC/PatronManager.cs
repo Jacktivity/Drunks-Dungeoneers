@@ -6,6 +6,7 @@ using UnityEngine;
 public class PatronManager : MonoBehaviour {
     [SerializeField] private Sprite[] bodies;
     [SerializeField] private Sprite[] heads;
+    [SerializeField] private Sprite cloak;
 
     List<Patron> patrons;
 	// Use this for initialization
@@ -24,11 +25,12 @@ public class PatronManager : MonoBehaviour {
         Sprite[] character = { head, body };
 
         GameObject patron = new GameObject();
+        patron.tag = "Patron";
         patron.AddComponent<Patron>();
         patron.transform.parent = gameObject.transform;
         
 
-        patron.GetComponent<Patron>().SetUpPatron(randClass,randRace,0.1f,1f,character,destination);
+        patron.GetComponent<Patron>().SetUpPatron(randClass,randRace,0.1f,1f,character,destination, cloak);
     }
 
 	// Update is called once per frame
