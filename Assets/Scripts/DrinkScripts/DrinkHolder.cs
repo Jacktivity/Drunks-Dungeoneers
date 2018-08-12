@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class DrinkHolder : MonoBehaviour
 {
-    BarManager barManger;
 
+    // Variables
+    private BarManager barManger;
     public DrinkTemplate drinkTemplate;
+
+    // Called on level start
     private void Start()
     {
         barManger = GetComponentInParent<BarManager>();
     }
+
+    // Used for main clicking on drinks to pickup from the bar
     public void OnMouseOver()
     {
         
@@ -23,6 +28,8 @@ public class DrinkHolder : MonoBehaviour
             }
         }
     }
+
+    // Updates the sprite and data stored at a given bar location
     public void SetDrink(DrinkTemplate newDrink)
     {
         drinkTemplate = newDrink;

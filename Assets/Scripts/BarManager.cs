@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class BarManager : MonoBehaviour {
 
-    public DrinkTemplate[] drinks;
-    public DrinkHolder[] drinkTemplates;
-    public GameObject maid;
+    // Variables
+    public DrinkTemplate[] drinks; // Contains all the drinks in the game
+    public DrinkHolder[] drinkTemplates; // The three bar drink positions
+    public GameObject maid; // Pointer to the maid object, representing the player
 
 
 	// Use this for initialization
@@ -16,32 +17,31 @@ public class BarManager : MonoBehaviour {
         SetDrinks();
     }
 
-	// Update is called once per frame
-	void Update ()
-    {
-    }
-
+    // Picks a random new drink from the list of drink ScriptableObjects
     public DrinkTemplate SelectDrink()
     {
         int pos = Random.Range(0, drinks.Length);
         return drinks[pos];
     }
 
-    /*
-     * Setters
-     * */
+    // Called every drink spawn interval (Determined by DelayDrinkSpawn) to populate the bar with new drinks
     public void SetDrinks()
     {
+        // For the 3 drinkholder positions
         foreach (DrinkHolder obj in drinkTemplates)
         {
+            // Select a new random drink
             var drink = SelectDrink();
+            // If the current bar position is empty, then
             if (obj.GetComponent<SpriteRenderer>().sprite == null)
             {
+                // If the drink to be placed is elsewhere on the bar, then
                 if(!CheckDrinks(drink))
                 {
-                    drink = SelectDrink();
-                    CheckDrinks(drink);
+                    this.SetDrinks();
+                    break;
                 }
+                // Else place the drink on the table
                 obj.SetDrink(drink);
             }
         }
@@ -53,20 +53,25 @@ public class BarManager : MonoBehaviour {
         StartCoroutine(DelayDrinkSpawn());
     }
 
+    // Delays the spawning of a new drink by a  given time
     private IEnumerator DelayDrinkSpawn()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(1);
         SetDrinks();
     }
+
     public bool CheckDrinks(DrinkTemplate drink)
     {
+        // For the 3 drinkholder positions
         foreach(DrinkHolder obj in drinkTemplates)
         {
-            if (drink == obj.drinkTemplate)
+            // If the drink to be placed exists in this position, return false
+            if (drink.Equals(obj.drinkTemplate))
             {
                 return false;
             }    
         }
+        // Else return true
         return true;
     }
 }
