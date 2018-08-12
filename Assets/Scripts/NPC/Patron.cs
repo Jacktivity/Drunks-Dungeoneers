@@ -20,8 +20,12 @@ public class Patron : MonoBehaviour {
     private int coins;
     private bool atTable;
     public int pathIndex;
+
     public Vector2[] path;
     private TableGrid grid;
+    private PathFinder pathFinder;
+    private float waitingForSpace;
+    private float maxWaitTime = 3;
 
     private Race charRace;
     private Class charClass;
@@ -31,8 +35,12 @@ public class Patron : MonoBehaviour {
     {
         SetUpSprites(patronClass, patronRace, character, cloak);
         ChangeOutfit();
+
         this.path = path.ToArray();
         pathIndex = 0;
+        waitingForSpace = Random.Range(1f, maxWaitTime);
+        pathFinder = Camera.main.GetComponent<PathFinder>();
+
         coins = Random.Range(5, 15);
         RandomThirst();
 
@@ -145,18 +153,35 @@ public class Patron : MonoBehaviour {
 
     private void TraversePath()
     {
-        pathIndex++;
-        if(pathIndex >= path.Length)
+        //Stop patrons from standing inside each other
+        if (grid.IsTileFree(path[pathIndex + 1]))
         {
-            pathIndex = path.Length - 1;
-        }
-        if(pathIndex == path.Length-1)
-        {
-            atTable = true;
-        }
-        grid.Taketile(path[pathIndex], path[pathIndex - 1]);
+            pathIndex++;
+            if (pathIndex >= path.Length)
+            {
+                pathIndex = path.Length - 1;
+            }
+            if (pathIndex == path.Length - 1)
+            {
+                atTable = true;
+            }
+            grid.Taketile(path[pathIndex], path[pathIndex - 1]);
 
-        transform.position = grid.GetWorldPositionOfGrid(path[pathIndex]);
+            transform.position = grid.GetWorldPositionOfGrid(path[pathIndex]);
+        }
+        else
+        {
+            waitingForSpace -= secondsPerMove;
+
+            if(waitingForSpace < 0)
+            {
+                List<Vector2> newPath = pathFinder.GetPath(path[pathIndex], path[path.Length -1]);
+                if (newPath != null)
+                    NewPath(newPath);                
+                   
+                waitingForSpace = Random.Range(1f, maxWaitTime);
+            }
+        }
     }
 
     public void NewPath(IEnumerable<Vector2> newPath)
