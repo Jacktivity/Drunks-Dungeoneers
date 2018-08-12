@@ -7,4 +7,5 @@ public class DrinkTemplate : ScriptableObject
 {
     public string objectName = "New Drink";
     public Sprite sprite;
+    public Sprite uiSprite;
 }

@@ -16,58 +16,67 @@ public class UIController : MonoBehaviour {
     private OpenGameWindow currentGameWindow;
 
     //References to UI windows
-    public GameObject PauseWindow;
-    public GameObject OptionsWindow;
-    public GameObject HelpWindow;
+    public GameObject pauseWindow;
+    public GameObject optionsWindow;
+    public GameObject helpWindow;
 
     private List<GameObject> healthBar;
-    public GameObject HealthTemplate;
-    public GameObject HealthBarHolder;
+    public GameObject healthTemplate;
+    public GameObject healthBarHolder;
 
-    private GameObject PlayerRef;
+    public GameObject coinText;
+    private Text coinTextRef;
+
+    public GameObject drinkImage;
+
+    public GameObject timerText;
+    private Text timerTextRef;
+
+    private GameObject playerRef;
+    private Maid maidScript;
 
 
     public void PauseGame()
     {
         Time.timeScale = 0;
-        PauseWindow.SetActive(true);
-        OptionsWindow.SetActive(false);
-        HelpWindow.SetActive(false);
+        pauseWindow.SetActive(true);
+        optionsWindow.SetActive(false);
+        helpWindow.SetActive(false);
     }
 
     public void TogglePauseMenu()
     {
-        if(!PauseWindow.activeSelf)
+        if(!pauseWindow.activeSelf)
         {
             Time.timeScale = 0;
-            PauseWindow.SetActive(true);
+            pauseWindow.SetActive(true);
         }
         else
         {
             Time.timeScale = 1;
-            PauseWindow.SetActive(false);
+            pauseWindow.SetActive(false);
         }
     }
 
     public void OpenOptionsWindow()
     {
-        PauseWindow.SetActive(false);
-        OptionsWindow.SetActive(true);
-        HelpWindow.SetActive(false);
+        pauseWindow.SetActive(false);
+        optionsWindow.SetActive(true);
+        helpWindow.SetActive(false);
     }
 
     public void OpenHelpWindow()
     {
-        PauseWindow.SetActive(false);
-        OptionsWindow.SetActive(false);
-        HelpWindow.SetActive(true);
+        pauseWindow.SetActive(false);
+        optionsWindow.SetActive(false);
+        helpWindow.SetActive(true);
     }
 
     public void OpenPauseWindow()
     {
-        PauseWindow.SetActive(true);
-        OptionsWindow.SetActive(false);
-        HelpWindow.SetActive(false);
+        pauseWindow.SetActive(true);
+        optionsWindow.SetActive(false);
+        helpWindow.SetActive(false);
     }
 
     public void QuitLevel()
@@ -77,11 +86,11 @@ public class UIController : MonoBehaviour {
 
     private void UpdateHealth()
     {
-        if (healthBar.Count > PlayerRef.GetComponent<Maid>().GetHealth())
+        if (healthBar.Count > playerRef.GetComponent<Maid>().GetHealth())
         {
             RemoveHealthIcon();
         }
-        else if (healthBar.Count < PlayerRef.GetComponent<Maid>().GetHealth())
+        else if (healthBar.Count < playerRef.GetComponent<Maid>().GetHealth())
         {
             AddHealthIcon();
         }
@@ -91,12 +100,12 @@ public class UIController : MonoBehaviour {
     {
         healthBar = new List<GameObject>();
 
-        int health = PlayerRef.GetComponent<Maid>().GetHealth();
+        int health = playerRef.GetComponent<Maid>().GetHealth();
 
         for (int i = 0; i < health;  i++)
         {
-            GameObject heart = Instantiate(HealthTemplate, new Vector3(0, 0, 0), Quaternion.identity);
-            heart.transform.SetParent(HealthBarHolder.transform);
+            GameObject heart = Instantiate(healthTemplate, new Vector3(0, 0, 0), Quaternion.identity);
+            heart.transform.SetParent(healthBarHolder.transform);
             heart.GetComponent<RectTransform>().anchoredPosition = new Vector3(i * 100.0f, 0.0f,0.0f);
             heart.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
             healthBar.Add(heart);
@@ -111,26 +120,47 @@ public class UIController : MonoBehaviour {
 
     private void AddHealthIcon()
     {
-        GameObject heart = Instantiate(HealthTemplate, new Vector3(0, 0, 0), Quaternion.identity);
-        heart.transform.SetParent(HealthBarHolder.transform);
+        GameObject heart = Instantiate(healthTemplate, new Vector3(0, 0, 0), Quaternion.identity);
+        heart.transform.SetParent(healthBarHolder.transform);
         heart.GetComponent<RectTransform>().anchoredPosition = new Vector3(healthBar.Count * 100.0f, 0.0f, 0.0f);
         heart.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
         healthBar.Add(heart);
     }
 
+    private void UpdateCoins()
+    {
+        coinTextRef.text = playerRef.GetComponent<Maid>().GetCoins().ToString();
+    }
+
+    private void UpdateDrinks()
+    {
+        drinkImage.GetComponent<Image>().sprite = maidScript.Getdrink().uiSprite;
+    }
+
+    public void UpdateTimerText(string newTime)
+    {
+        timerTextRef.text = newTime;
+    }
+
     private void Start()
     {
-        PlayerRef = GameObject.FindGameObjectWithTag("Player");
+        playerRef = GameObject.FindGameObjectWithTag("Player");
         InitHealthUI();
+
+        //Get component references.
+        coinTextRef = coinText.GetComponent<Text>();
+        maidScript = playerRef.GetComponent<Maid>();
+        timerTextRef = timerText.GetComponent<Text>();
     }
 
     private void Update()
     {
         if (Input.GetKeyDown("p"))
-        {
             TogglePauseMenu();
-        }
+
         UpdateHealth();
+        UpdateCoins();
+        UpdateDrinks();
     }
 
 }

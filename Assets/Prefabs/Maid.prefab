@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a5501e7783197f40aaa0347c54fb213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drink: {fileID: 11400000, guid: 0de8904bdafa4aa4eb206b1a6dbb4d18, type: 2}
+  drink: {fileID: 11400000, guid: a9a3436045fc45240b8c72eed0f2ce13, type: 2}
   drinkHeld: {fileID: 1615860868265762}
 --- !u!212 &212191846353480720
 SpriteRenderer:

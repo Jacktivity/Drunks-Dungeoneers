@@ -16,6 +16,7 @@ public class Maid : MonoBehaviour {
     public GameObject drinkHeld;
 
     private int health;
+    private int coins;
     private Vector2 hSpeed;
     private Vector2 vSpeed;
     private Vector2 drinkPos;
@@ -97,6 +98,14 @@ public class Maid : MonoBehaviour {
         vSpeed = new Vector2(0, 0);
 
 
+
+
+        ////////////
+        //DEBUG INPUT
+        ////////////
+        if (Input.GetKeyDown("l"))
+            coins++;
+            
     }
     
     /*
@@ -121,6 +130,11 @@ public class Maid : MonoBehaviour {
     public DrinkTemplate Getdrink()
     {
         return this.drink;
+    }
+
+    public int GetCoins()
+    {
+        return this.coins;
     }
 
     /*
