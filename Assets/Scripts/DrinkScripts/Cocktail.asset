@@ -13,3 +13,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DrinkTemplate
   objectName: Cocktail
   sprite: {fileID: 21300006, guid: ac1396e829a91f04aa3bba481cb9a256, type: 3}
+  uiSprite: {fileID: 21300006, guid: 16ce4a00fa37ece458c1137ea6fb6d5f, type: 3}
