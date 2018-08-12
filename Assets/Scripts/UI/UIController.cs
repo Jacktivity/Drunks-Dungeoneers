@@ -24,7 +24,7 @@ public class UIController : MonoBehaviour {
     public GameObject HealthTemplate;
     public GameObject HealthBarHolder;
 
-    public GameObject PlayerRef;
+    private GameObject PlayerRef;
 
 
     public void PauseGame()

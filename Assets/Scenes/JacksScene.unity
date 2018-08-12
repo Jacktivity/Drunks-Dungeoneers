@@ -334,7 +334,7 @@ Prefab:
     - target: {fileID: 224666521020374720, guid: 5516df2a44ca1044f8727e957c3610ed,
         type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224666521020374720, guid: 5516df2a44ca1044f8727e957c3610ed,
         type: 2}
@@ -434,7 +434,7 @@ Prefab:
     - target: {fileID: 224187840522779064, guid: 7f9c77c4c165c8545ac909a9d852fe08,
         type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 224187840522779064, guid: 7f9c77c4c165c8545ac909a9d852fe08,
         type: 2}
@@ -713,7 +713,7 @@ Prefab:
     - target: {fileID: 224310157346694010, guid: f0389c5177843fe4d96adc0876a8c0e6,
         type: 2}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224310157346694010, guid: f0389c5177843fe4d96adc0876a8c0e6,
         type: 2}
@@ -1002,7 +1002,6 @@ MonoBehaviour:
   HealthTemplate: {fileID: 1902562003576852, guid: 05a1708cdb3eff346826ea233c4f15d9,
     type: 2}
   HealthBarHolder: {fileID: 2073217794}
-  PlayerRef: {fileID: 0}
 --- !u!4 &1451830920
 Transform:
   m_ObjectHideFlags: 0
@@ -1171,10 +1170,10 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 2073217795}
   - {fileID: 1464146270}
   - {fileID: 995103816}
   - {fileID: 211958195}
-  - {fileID: 2073217795}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1244,7 +1243,7 @@ Prefab:
     - target: {fileID: 224938645573408496, guid: c447239f202a7a24695a8fe942ed54c5,
         type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 224938645573408496, guid: c447239f202a7a24695a8fe942ed54c5,
         type: 2}
