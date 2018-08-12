@@ -4,17 +4,23 @@ using UnityEngine;
 
 
 public class PatronManager : MonoBehaviour {
+    [SerializeField] private TableGrid grid;
+
     [SerializeField] private Sprite[] bodies;
     [SerializeField] private Sprite[] heads;
     [SerializeField] private Sprite cloak;
 
     List<Patron> patrons;
+
+    PathFinder pathFinder;
+
 	// Use this for initialization
 	void Start () {
         patrons = new List<Patron>();
+        pathFinder = Camera.main.GetComponent<PathFinder>();
     }
 	
-    public void MakePatron(IEnumerable<Vector2> destination)
+    public void MakePatron()
     {
         Patron.Race randRace = (Patron.Race)Random.Range(0, 4);
         Patron.Class randClass = (Patron.Class)Random.Range(0, 3);
@@ -27,7 +33,11 @@ public class PatronManager : MonoBehaviour {
         GameObject patron = new GameObject();
         patron.tag = "Patron";
         patron.AddComponent<Patron>();
-        patron.transform.parent = gameObject.transform;
+        patron.transform.parent = grid.transform;
+
+        patrons.Add(patron.GetComponent<Patron>());
+
+        List<Vector2> destination = pathFinder.GetPathFromSpawnToSeat();
         
 
         patron.GetComponent<Patron>().SetUpPatron(randClass,randRace,0.1f,1f,character,destination, cloak);

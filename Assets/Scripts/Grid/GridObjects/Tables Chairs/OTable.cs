@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class OTable : MonoBehaviour {
 
     public Vector2 location;
-    public List<GameObject> chairs;
     public TableObject tableType;
     public GameObject chairPrefab;
 
@@ -13,6 +11,8 @@ public class OTable : MonoBehaviour {
     private void Start()
     {
         grid = GetComponentInParent<TableGrid>();
+
+        transform.position = grid.GetWorldPositionOfGrid(location, tableType.middleGridx, tableType.middleGridY);
 
         GetComponent<SpriteRenderer>().sprite = tableType.sprite;
 
@@ -25,12 +25,6 @@ public class OTable : MonoBehaviour {
             OChair oChair = prefab.GetComponent<OChair>();
             oChair.location = new Vector2(location.x + chair.x, location.y + chair.y);
             oChair.chairObject = tableType.chair;
-        }
-
-        //Block the tiles the table is on
-        foreach(Vector2 tableLocations in tableType.addedLocations)
-        {
-            grid.AddTileToLocation(new Vector2(location.x + tableLocations.x, location.y + tableLocations.y), TileContent.Blocking);
         }
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PathFinder : MonoBehaviour {
 
-    public TableGrid grid;
+    [SerializeField] private TableGrid grid;
     private readonly float straitLength = 1;
 
     float Heuristic(Vector2 from, Vector2 goal)
@@ -114,6 +114,24 @@ public class PathFinder : MonoBehaviour {
         */
 
         return straitLength;
+    }
+
+    /// <summary>
+    /// Gets a free seat and gets a random spawn point
+    /// then gets a path between them
+    /// </summary>
+    /// <returns>A Path between the spawn and the seat</returns>
+    public List<Vector2> GetPathFromSpawnToSeat()
+    {
+        Vector2 spawnLocation = grid.GetSpawnPoint();
+        Vector2? seatLocation = grid.GetFreeSeat();
+
+        if(seatLocation != null)
+        {
+            return GetPath(spawnLocation, seatLocation.Value);
+        }
+
+        return null;
     }
 
     /// <summary>

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 
 [CustomEditor(typeof(PathFinderTest))]
@@ -21,7 +19,6 @@ public class PathFinderTestEditor : Editor {
         {
             finderTest.GetPath();
         }
-
     }
 
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class ButtonTest : MonoBehaviour
@@ -15,7 +13,6 @@ public class ButtonTest : MonoBehaviour
     }
 
     void TaskOnClick() {
-        Vector2[] path = { new Vector2(0, 0) };
-        GetComponent<PatronManager>().MakePatron(path);
+        GetComponent<PatronManager>().MakePatron();
     }
 }
