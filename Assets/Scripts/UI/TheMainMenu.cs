@@ -27,6 +27,8 @@ public class TheMainMenu : MonoBehaviour
 
 	void Start ()
     {
+        Time.timeScale = 0;
+
         mainMenuPanel.SetActive(true);
         scoreBoardPanel.SetActive(false);
         optionsPanel.SetActive(false);
@@ -41,7 +43,7 @@ public class TheMainMenu : MonoBehaviour
 
     public void TogglePlayButton()
     {
-        //Time.timeScale = 1;
+        Time.timeScale = 1;
         SceneManager.LoadScene(1);
     }
 
