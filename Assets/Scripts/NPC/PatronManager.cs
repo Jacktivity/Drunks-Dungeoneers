@@ -22,25 +22,29 @@ public class PatronManager : MonoBehaviour {
 	
     public void MakePatron()
     {
-        Patron.Race randRace = (Patron.Race)Random.Range(0, 4);
-        Patron.Class randClass = (Patron.Class)Random.Range(0, 3);
-
-        Sprite head = heads[(int)randClass];
-        Sprite body = bodies[(int)randRace];
-
-        Sprite[] character = { head, body };
-
-        GameObject patron = new GameObject();
-        patron.tag = "Patron";
-        patron.AddComponent<Patron>();
-        patron.transform.parent = grid.transform;
-
-        patrons.Add(patron.GetComponent<Patron>());
-
         List<Vector2> destination = pathFinder.GetPathFromSpawnToSeat();
-        
 
-        patron.GetComponent<Patron>().SetUpPatron(randClass,randRace,0.1f,1f,character,destination, cloak);
+        //If we can get a path to the destination
+        if (destination != null)
+        {
+
+            Patron.Race randRace = (Patron.Race)Random.Range(0, 4);
+            Patron.Class randClass = (Patron.Class)Random.Range(0, 3);
+
+            Sprite head = heads[(int)randClass];
+            Sprite body = bodies[(int)randRace];
+
+            Sprite[] character = { head, body };
+
+            GameObject patron = new GameObject();
+            patron.tag = "Patron";
+            patron.AddComponent<Patron>();
+            patron.transform.parent = grid.transform;
+
+            patrons.Add(patron.GetComponent<Patron>());
+
+            patron.GetComponent<Patron>().SetUpPatron(randClass, randRace, 0.1f, 1f, character, destination, cloak);
+        }
     }
 
 	// Update is called once per frame
