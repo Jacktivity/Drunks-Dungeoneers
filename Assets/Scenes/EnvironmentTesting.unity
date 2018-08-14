@@ -791,7 +791,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 12.24584
+  orthographic size: 20
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -814,7 +814,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1174718037}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -971,15 +971,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grid: {fileID: 154445447}
   bodies:
-  - {fileID: 21300000, guid: 7e6f1043417adc24892de3e82de5c63a, type: 3}
-  - {fileID: 21300000, guid: 85c13ceb74389694b947bb3dc8cb1544, type: 3}
-  - {fileID: 21300000, guid: 5db549fbd21576741942a04810173dfb, type: 3}
-  - {fileID: 21300000, guid: 6b2fa6ce5c23fb04190c89adac7f3f63, type: 3}
+  - {fileID: 21300024, guid: 40682f095ada3b8408266dd3577a4aaf, type: 3}
+  - {fileID: 21300028, guid: 40682f095ada3b8408266dd3577a4aaf, type: 3}
+  - {fileID: 21300026, guid: 40682f095ada3b8408266dd3577a4aaf, type: 3}
+  - {fileID: 21300030, guid: 40682f095ada3b8408266dd3577a4aaf, type: 3}
   heads:
-  - {fileID: 21300000, guid: d49c3d27982add94db0efdab60143f51, type: 3}
-  - {fileID: 21300000, guid: 6b2fa6ce5c23fb04190c89adac7f3f63, type: 3}
-  - {fileID: 21300000, guid: 36b0348ca8b64494d821304e92da1a76, type: 3}
-  cloak: {fileID: 21300000, guid: a1ec8d44def26db488b669b8b2b49b9a, type: 3}
+  - {fileID: 21300016, guid: 40682f095ada3b8408266dd3577a4aaf, type: 3}
+  - {fileID: 21300018, guid: 40682f095ada3b8408266dd3577a4aaf, type: 3}
+  - {fileID: 21300020, guid: 40682f095ada3b8408266dd3577a4aaf, type: 3}
+  - {fileID: 21300022, guid: 40682f095ada3b8408266dd3577a4aaf, type: 3}
+  cloak: {fileID: 21300008, guid: a2b77e291337fc54393ab379fba868a2, type: 3}
 --- !u!1001 &1669993310
 Prefab:
   m_ObjectHideFlags: 0

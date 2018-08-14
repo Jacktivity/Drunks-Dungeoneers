@@ -7,6 +7,7 @@ public class Patron : MonoBehaviour {
 
     Sprite[] character;
     Sprite cloak;
+    Patron.Class tempClass;
 
     private float secondsPerMove;
     private float secondsPerAction;
@@ -45,6 +46,8 @@ public class Patron : MonoBehaviour {
         RandomThirst();
 
         grid = GetComponentInParent<TableGrid>();
+
+        tempClass = patronClass;
     }
 
     private void SetUpSprites(Class patronClass, Race patronRace, IEnumerable<Sprite> character, Sprite cloaked)
@@ -72,6 +75,15 @@ public class Patron : MonoBehaviour {
         {
             bodySprite.sprite = character.ToArray()[0];
             helmSprite.sprite = character.ToArray()[1];
+            if(tempClass.ToString().Equals("Wizard") || tempClass.ToString().Equals("Cleric"))
+            {
+                helmSprite.transform.localPosition = new Vector2(0, 75);
+            }
+            else
+            {
+                helmSprite.transform.localPosition = new Vector2(0, 0.5f);
+            }
+            
         }
         else
         {
