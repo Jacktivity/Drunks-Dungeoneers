@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Name: RoundTable2Seat
   m_EditorClassIdentifier: Assembly-CSharp::TableObject
   chair: {fileID: 11400000, guid: 92900b89e00a49640ad7f626bfc42d97, type: 2}
-  addedLocations: []
-  seatLocations:
+  addedLocations:
   - {x: 1, y: 0}
   - {x: -1, y: 0}
+  seatLocations:
+  - {x: 2, y: 0}
+  - {x: -2, y: 0}
   sprite: {fileID: 21300000, guid: cb1d3695682ed2d49b0389d2a940355c, type: 3}
   middleGridx: 1
   middleGridY: 1

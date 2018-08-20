@@ -37,6 +37,11 @@ public class Patron : MonoBehaviour {
         SetUpSprites(patronClass, patronRace, character, cloak);
         ChangeOutfit();
 
+        //Change z depth
+        Vector3 position = transform.position;
+        position.z = -1;
+        transform.position = position;
+
         this.path = path.ToArray();
         pathIndex = 0;
         waitingForSpace = Random.Range(1f, maxWaitTime);

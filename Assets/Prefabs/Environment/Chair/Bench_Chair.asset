@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Bench_Chair
   m_EditorClassIdentifier: Assembly-CSharp::ChairObject
   addedLocations:
-  - {x: 0, y: 1}
+  - {x: 0, y: -1}
   sprite: {fileID: 21300000, guid: 3aa033daa714e804f9d6226d53ba72db, type: 3}
   middleGridx: 1
   middleGridY: 0
