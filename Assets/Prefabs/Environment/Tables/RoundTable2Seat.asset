@@ -8,7 +8,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 43506d7d9201b0642a69ca4492702a0d, type: 3}
   m_Name: RoundTable2Seat
   m_EditorClassIdentifier: Assembly-CSharp::TableObject
   chair: {fileID: 11400000, guid: 92900b89e00a49640ad7f626bfc42d97, type: 2}
@@ -17,3 +17,5 @@ MonoBehaviour:
   - {x: 1, y: 0}
   - {x: -1, y: 0}
   sprite: {fileID: 21300000, guid: cb1d3695682ed2d49b0389d2a940355c, type: 3}
+  middleGridx: 1
+  middleGridY: 1

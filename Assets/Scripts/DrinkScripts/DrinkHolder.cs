@@ -17,8 +17,7 @@ public class DrinkHolder : MonoBehaviour
 
     // Used for main clicking on drinks to pickup from the bar
     public void OnMouseOver()
-    {
-        
+    {        
         if (Input.GetMouseButtonDown(0))
         {
             if (Vector2.Distance(barManger.maid.transform.position, this.transform.position) < 0.5)

@@ -8,9 +8,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: f11095461ed8d3241bbcc46d9e6d6be8, type: 3}
   m_Name: Empty
   m_EditorClassIdentifier: Assembly-CSharp::DrinkTemplate
-  objectName: No Drink
+  objectName: Empty
   sprite: {fileID: 21300000, guid: e62f5e131eb50c9498fbdb4e625b61f2, type: 3}
   uiSprite: {fileID: 21300000, guid: f5063357d9483a9499fca51a62b824e0, type: 3}
