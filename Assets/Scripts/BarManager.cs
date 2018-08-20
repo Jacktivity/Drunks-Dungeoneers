@@ -5,7 +5,7 @@ using UnityEngine;
 public class BarManager : MonoBehaviour {
 
     // Variables
-    public DrinkTemplate[] drinks; // Contains all the drinks in the game
+    public List<DrinkTemplate> drinks; // Contains all the drinks in the game
     public DrinkHolder[] drinkTemplates; // The three bar drink positions
     public GameObject maid; // Pointer to the maid object, representing the player
 
@@ -21,7 +21,7 @@ public class BarManager : MonoBehaviour {
     // Picks a random new drink from the list of drink ScriptableObjects
     public DrinkTemplate SelectDrink()
     {
-        int pos = Random.Range(0, drinks.Length);
+        int pos = Random.Range(0, drinks.Count);
         return drinks[pos];
     }
 

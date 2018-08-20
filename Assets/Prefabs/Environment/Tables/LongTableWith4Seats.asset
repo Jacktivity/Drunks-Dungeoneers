@@ -8,7 +8,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 43506d7d9201b0642a69ca4492702a0d, type: 3}
   m_Name: LongTableWith4Seats
   m_EditorClassIdentifier: Assembly-CSharp::TableObject
   chair: {fileID: 11400000, guid: da36a3b5f1c10b542bfac249b497eeca, type: 2}
@@ -19,4 +19,4 @@ MonoBehaviour:
   - {x: -1, y: 0}
   sprite: {fileID: 21300000, guid: 7bb4d09d28449b6408329a2b60a4f63c, type: 3}
   middleGridx: 1
-  middleGridY: 0
+  middleGridY: 1

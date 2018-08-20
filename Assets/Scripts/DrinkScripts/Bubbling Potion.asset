@@ -8,7 +8,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: f11095461ed8d3241bbcc46d9e6d6be8, type: 3}
   m_Name: Bubbling Potion
   m_EditorClassIdentifier: Assembly-CSharp::DrinkTemplate
   objectName: Bubbling Potion
