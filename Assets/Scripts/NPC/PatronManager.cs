@@ -29,7 +29,7 @@ public class PatronManager : MonoBehaviour {
         {
 
             Patron.Race randRace = (Patron.Race)Random.Range(0, 4);
-            Patron.Class randClass = (Patron.Class)Random.Range(0, 3);
+            Patron.Class randClass = (Patron.Class)Random.Range(0, 4);
 
             Sprite head = heads[(int)randClass];
             Sprite body = bodies[(int)randRace];
